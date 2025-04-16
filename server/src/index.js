@@ -2,6 +2,7 @@ import express from "express";
 import authRoutes from "./routes/authRoutes.js";
 import interviewsRoutes from "./routes/interviewsRoutes.js";
 import usersRoutes from "./routes/usersRoutes.js";
+import audioUploadRoutes from "./routes/audioUploadRoutes.js";
 import dotenv from "dotenv";
 import cors from "cors";
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 app.use("/api",authRoutes);
 app.use("/api/users",usersRoutes);
 app.use("/api/interviews",interviewsRoutes);
+app.use("/api/upload",audioUploadRoutes);
 
 
 app.listen(PORT, () => {

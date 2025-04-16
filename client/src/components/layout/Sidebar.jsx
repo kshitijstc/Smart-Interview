@@ -73,7 +73,7 @@ export default function Sidebar({ role }) {
           <button
             onClick={() => {
               localStorage.removeItem("token");
-              window.location.href = "/login";
+              window.location.href = "/";
             }}
             className="flex items-center gap-3 text-red-500 mt-8"
           >

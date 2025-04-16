@@ -19,7 +19,7 @@ export default function Topbar({ name }) {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/"; // redirect to login
+    window.location.href = "/"; 
   };
 
   return (

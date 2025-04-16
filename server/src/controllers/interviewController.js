@@ -136,7 +136,7 @@ export const getInterviewRoom = async (req, res) => {
         }
       }
     );
-    console.log("JWT Token:", token);
+    // console.log("JWT Token:", token);
     res.status(200).json({ room, jwt: token });
   } catch (err) {
     console.error("Error fetching interview room:", err);
