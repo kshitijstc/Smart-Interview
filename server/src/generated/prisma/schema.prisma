@@ -51,10 +51,11 @@ model Interview {
   interviewer   User   @relation("Interviewer", fields: [interviewerId], references: [id])
   interviewerId String
 
-  room        Room?
-  scheduledAt DateTime
-  status      InterviewStatus @default(SCHEDULED)
-  evaluation  Evaluation?
+  candidateCode String?
+  room          Room?
+  scheduledAt   DateTime
+  status        InterviewStatus @default(SCHEDULED)
+  evaluation    Evaluation?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

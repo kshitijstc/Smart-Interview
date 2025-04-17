@@ -51,6 +51,7 @@ model Interview {
   interviewer   User        @relation("Interviewer", fields: [interviewerId], references: [id])
   interviewerId String
 
+  candidateCode String?
   room          Room?
   scheduledAt   DateTime
   status        InterviewStatus @default(SCHEDULED)

@@ -131,6 +131,7 @@ exports.Prisma.InterviewScalarFieldEnum = {
   id: 'id',
   candidateId: 'candidateId',
   interviewerId: 'interviewerId',
+  candidateCode: 'candidateCode',
   scheduledAt: 'scheduledAt',
   status: 'status',
   createdAt: 'createdAt',
@@ -174,6 +175,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.Role = exports.$Enums.Role = {
   CANDIDATE: 'CANDIDATE',

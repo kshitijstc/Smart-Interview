@@ -136,8 +136,7 @@ export const getInterviewRoom = async (req, res) => {
         }
       }
     );
-    // console.log("JWT Token:", token);
-    res.status(200).json({ room, jwt: token });
+    res.status(200).json({ role: req.user.role , room, jwt: token });
   } catch (err) {
     console.error("Error fetching interview room:", err);
     res.status(500).json({ error: "Server error" });
@@ -145,5 +144,48 @@ export const getInterviewRoom = async (req, res) => {
 };
 
 
+export const updateInterviewStatus = async (req, res) => {
+  const { link } = req.params;
+  const { status } = req.body;
 
+  try {
+    // Get Room by roomName (assuming format = `${interviewerId}${interviewId}`)
+    const room = await prisma.room.findUnique({
+      where: { link },
+    });
 
+    // if (!room || !room.interview) {
+    //   return res.status(404).json({ error: "Interview not found via roomName" });
+    // }
+
+    const updated = await prisma.interview.update({
+      where: { id: room.interviewId },
+      data: { status },
+    });
+
+    console.log("Updated Interview status successfully");
+    return res.status(200);
+  }catch(err){
+    console.error("Error updating interview status:", err);
+    return res.status(500).json({error:"Server error"});
+  }
+}
+
+export const saveInterviewCode = async (req, res) => {
+  const { id } = req.params;
+  const { code } = req.body;
+
+  try {
+    const room = await prisma.room.findUnique({
+      where: { link:id },
+    });
+    await prisma.interview.update({
+      where: { id: room.interviewId },
+      data: { candidateCode: code },
+    });
+    res.json({ message: "Code saved" });
+  } catch (error) {
+    console.error("Error saving code:", error);
+    res.status(500).json({ error: "Could not save code" });
+  }
+};

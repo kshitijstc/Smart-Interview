@@ -2643,6 +2643,7 @@ export namespace Prisma {
     id: string | null
     candidateId: string | null
     interviewerId: string | null
+    candidateCode: string | null
     scheduledAt: Date | null
     status: $Enums.InterviewStatus | null
     createdAt: Date | null
@@ -2653,6 +2654,7 @@ export namespace Prisma {
     id: string | null
     candidateId: string | null
     interviewerId: string | null
+    candidateCode: string | null
     scheduledAt: Date | null
     status: $Enums.InterviewStatus | null
     createdAt: Date | null
@@ -2663,6 +2665,7 @@ export namespace Prisma {
     id: number
     candidateId: number
     interviewerId: number
+    candidateCode: number
     scheduledAt: number
     status: number
     createdAt: number
@@ -2675,6 +2678,7 @@ export namespace Prisma {
     id?: true
     candidateId?: true
     interviewerId?: true
+    candidateCode?: true
     scheduledAt?: true
     status?: true
     createdAt?: true
@@ -2685,6 +2689,7 @@ export namespace Prisma {
     id?: true
     candidateId?: true
     interviewerId?: true
+    candidateCode?: true
     scheduledAt?: true
     status?: true
     createdAt?: true
@@ -2695,6 +2700,7 @@ export namespace Prisma {
     id?: true
     candidateId?: true
     interviewerId?: true
+    candidateCode?: true
     scheduledAt?: true
     status?: true
     createdAt?: true
@@ -2778,6 +2784,7 @@ export namespace Prisma {
     id: string
     candidateId: string
     interviewerId: string
+    candidateCode: string | null
     scheduledAt: Date
     status: $Enums.InterviewStatus
     createdAt: Date
@@ -2805,6 +2812,7 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
+    candidateCode?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -2819,6 +2827,7 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
+    candidateCode?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -2831,6 +2840,7 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
+    candidateCode?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -2843,13 +2853,14 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
+    candidateCode?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type InterviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateId" | "interviewerId" | "scheduledAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["interview"]>
+  export type InterviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateId" | "interviewerId" | "candidateCode" | "scheduledAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["interview"]>
   export type InterviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidate?: boolean | UserDefaultArgs<ExtArgs>
     interviewer?: boolean | UserDefaultArgs<ExtArgs>
@@ -2877,6 +2888,7 @@ export namespace Prisma {
       id: string
       candidateId: string
       interviewerId: string
+      candidateCode: string | null
       scheduledAt: Date
       status: $Enums.InterviewStatus
       createdAt: Date
@@ -3311,6 +3323,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Interview", 'String'>
     readonly candidateId: FieldRef<"Interview", 'String'>
     readonly interviewerId: FieldRef<"Interview", 'String'>
+    readonly candidateCode: FieldRef<"Interview", 'String'>
     readonly scheduledAt: FieldRef<"Interview", 'DateTime'>
     readonly status: FieldRef<"Interview", 'InterviewStatus'>
     readonly createdAt: FieldRef<"Interview", 'DateTime'>
@@ -8033,6 +8046,7 @@ export namespace Prisma {
     id: 'id',
     candidateId: 'candidateId',
     interviewerId: 'interviewerId',
+    candidateCode: 'candidateCode',
     scheduledAt: 'scheduledAt',
     status: 'status',
     createdAt: 'createdAt',
@@ -8097,6 +8111,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -8282,6 +8304,7 @@ export namespace Prisma {
     id?: StringFilter<"Interview"> | string
     candidateId?: StringFilter<"Interview"> | string
     interviewerId?: StringFilter<"Interview"> | string
+    candidateCode?: StringNullableFilter<"Interview"> | string | null
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeFilter<"Interview"> | Date | string
@@ -8296,6 +8319,7 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
+    candidateCode?: SortOrderInput | SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -8313,6 +8337,7 @@ export namespace Prisma {
     NOT?: InterviewWhereInput | InterviewWhereInput[]
     candidateId?: StringFilter<"Interview"> | string
     interviewerId?: StringFilter<"Interview"> | string
+    candidateCode?: StringNullableFilter<"Interview"> | string | null
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeFilter<"Interview"> | Date | string
@@ -8327,6 +8352,7 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
+    candidateCode?: SortOrderInput | SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -8343,6 +8369,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Interview"> | string
     candidateId?: StringWithAggregatesFilter<"Interview"> | string
     interviewerId?: StringWithAggregatesFilter<"Interview"> | string
+    candidateCode?: StringNullableWithAggregatesFilter<"Interview"> | string | null
     scheduledAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusWithAggregatesFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
@@ -8651,6 +8678,7 @@ export namespace Prisma {
 
   export type InterviewCreateInput = {
     id?: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -8665,6 +8693,7 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -8675,6 +8704,7 @@ export namespace Prisma {
 
   export type InterviewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8689,6 +8719,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8701,6 +8732,7 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -8709,6 +8741,7 @@ export namespace Prisma {
 
   export type InterviewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8719,6 +8752,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9058,6 +9092,21 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type EnumInterviewStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.InterviewStatus | EnumInterviewStatusFieldRefInput<$PrismaModel>
     in?: $Enums.InterviewStatus[] | ListEnumInterviewStatusFieldRefInput<$PrismaModel>
@@ -9080,10 +9129,16 @@ export namespace Prisma {
     isNot?: EvaluationWhereInput | null
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type InterviewCountOrderByAggregateInput = {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
+    candidateCode?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -9094,6 +9149,7 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
+    candidateCode?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -9104,10 +9160,29 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
+    candidateCode?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumInterviewStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -9518,6 +9593,10 @@ export namespace Prisma {
     connect?: EvaluationWhereUniqueInput
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type EnumInterviewStatusFieldUpdateOperationsInput = {
     set?: $Enums.InterviewStatus
   }
@@ -9744,11 +9823,53 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedEnumInterviewStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.InterviewStatus | EnumInterviewStatusFieldRefInput<$PrismaModel>
     in?: $Enums.InterviewStatus[] | ListEnumInterviewStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.InterviewStatus[] | ListEnumInterviewStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumInterviewStatusFilter<$PrismaModel> | $Enums.InterviewStatus
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedEnumInterviewStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -9803,6 +9924,7 @@ export namespace Prisma {
 
   export type InterviewCreateWithoutCandidateInput = {
     id?: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -9815,6 +9937,7 @@ export namespace Prisma {
   export type InterviewUncheckedCreateWithoutCandidateInput = {
     id?: string
     interviewerId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -9835,6 +9958,7 @@ export namespace Prisma {
 
   export type InterviewCreateWithoutInterviewerInput = {
     id?: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -9847,6 +9971,7 @@ export namespace Prisma {
   export type InterviewUncheckedCreateWithoutInterviewerInput = {
     id?: string
     candidateId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -9952,6 +10077,7 @@ export namespace Prisma {
     id?: StringFilter<"Interview"> | string
     candidateId?: StringFilter<"Interview"> | string
     interviewerId?: StringFilter<"Interview"> | string
+    candidateCode?: StringNullableFilter<"Interview"> | string | null
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeFilter<"Interview"> | Date | string
@@ -10344,6 +10470,7 @@ export namespace Prisma {
 
   export type InterviewCreateWithoutRoomInput = {
     id?: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10357,6 +10484,7 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10382,6 +10510,7 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutRoomInput = {
     id?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10395,6 +10524,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10404,6 +10534,7 @@ export namespace Prisma {
 
   export type InterviewCreateWithoutEvaluationInput = {
     id?: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10417,6 +10548,7 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10442,6 +10574,7 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutEvaluationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10455,6 +10588,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10609,6 +10743,7 @@ export namespace Prisma {
   export type InterviewCreateManyCandidateInput = {
     id?: string
     interviewerId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10618,6 +10753,7 @@ export namespace Prisma {
   export type InterviewCreateManyInterviewerInput = {
     id?: string
     candidateId: string
+    candidateCode?: string | null
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10643,6 +10779,7 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutCandidateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10655,6 +10792,7 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateWithoutCandidateInput = {
     id?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10666,6 +10804,7 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateManyWithoutCandidateInput = {
     id?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10674,6 +10813,7 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutInterviewerInput = {
     id?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10686,6 +10826,7 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateWithoutInterviewerInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10697,6 +10838,7 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateManyWithoutInterviewerInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
+    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
