@@ -15,19 +15,19 @@ export default function JoinInterview() {
   const { id } = useParams();
   const [role, setRole] = useState(null);
   const [jwtToken, setJwtToken] = useState(null);
+  const [language, setLanguage] = useState("cpp");
   const [code, setCode] = useState("// Start coding here...");
   const mediaRecorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
+  const editorRef = useRef(null);
 
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
 
   useEffect(() => {
     socket.emit("joinRoom", id);
-  
     socket.on("codeUpdate", (incomingCode) => {
       setCode(incomingCode);
     });
-  
     return () => {
       socket.off("codeUpdate");
     };
@@ -37,15 +37,25 @@ export default function JoinInterview() {
     setCode(value);
     socket.emit("codeChange", { roomId: id, code: value });
   };
+  
+  const handleEditorDidMount = (editor, monaco) => {
+    editorRef.current = editor; // Store editor instance
+  };
+  const handleLanguageChange = (e) => {
+    const newLanguage = e.target.value;
+    setLanguage(newLanguage);
+    if (editorRef.current) {
+      monaco.editor.setModelLanguage(editorRef.current.getModel(), newLanguage);
+    }
+  };
 
   useEffect(() => {
     const initRoom = async () => {
       try {
-        const res = await axios.get(
+        const res = await axios.get(  
           `http://localhost:5000/api/interviews/room/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log("API Response:", res.data);
         setJwtToken(res.data.jwt);
         setRole(res.data.role);
       } catch (err) {
@@ -72,13 +82,19 @@ export default function JoinInterview() {
         formData.append("interviewId", id);
 
         try {
-          await axios.post("http://localhost:5000/api/upload/audio", formData, {
+          const res=await axios.post("http://localhost:5000/api/upload/audio", formData, {
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
             },
           });
-          console.log("Audio uploaded successfully.");
+          const audioUrl = res.data.url;
+          console.log("Cloudinary url",res.data.url);
+          await axios.post(
+            `http://localhost:5000/api/interviews/${id}/save-audio-url`,
+            { audioUrl },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
         } catch (error) {
           console.error("Upload failed:", error);
         }
@@ -110,9 +126,38 @@ export default function JoinInterview() {
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="p-3 bg-gray-100 text-sm flex justify-between items-center border-b">
+      <header className="p-2 bg-gray-100 text-md flex justify-between items-center border-b">
         <h2 className="font-semibold">Live Interview Room</h2>
-        <span className="text-gray-500">{saving ? "Saving..." : "All changes saved"}</span>
+        
+        {role === "INTERVIEWER" && (
+        <div className="p-2 flex gap-2">
+          <button
+            onClick={startRecording}
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 cursor-pointer"
+          >
+            Start Recording
+          </button>
+          <button
+            onClick={stopRecording}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 cursor-pointer"
+          >
+            Stop + Upload
+          </button>
+        </div>
+      )}
+        
+        <select
+          value={language}
+          onChange={handleLanguageChange}
+          className="p-1 border rounded cursor-pointer"
+        >
+          <option value="cpp">C++</option>
+          <option value="python">Python</option>
+          <option value="java">Java</option>
+          <option value="javascript">JavaScript</option>
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+        </select>
       </header>
 
       <div className="flex flex-1 overflow-hidden">
@@ -161,9 +206,10 @@ export default function JoinInterview() {
           <Suspense fallback={<div className="h-full flex items-center justify-center">Loading Editor...</div>}>
             <Editor
               height="100%"
-              defaultLanguage="javascript"
+              defaultLanguage={language} // Set default language
               value={code}
               onChange={handleEditorChange}
+              onMount={handleEditorDidMount}
               theme="vs-dark"
               options={{
                 fontSize: 14,
@@ -175,22 +221,7 @@ export default function JoinInterview() {
         </div>
       </div>
 
-      {role === "INTERVIEWER" && (
-        <div className="p-3 bg-gray-50 flex justify-end gap-4 border-t">
-          <button
-            onClick={startRecording}
-            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-          >
-            Start Recording
-          </button>
-          <button
-            onClick={stopRecording}
-            className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
-          >
-            Stop + Upload
-          </button>
-        </div>
-      )}
+      
     </div>
   );
 }

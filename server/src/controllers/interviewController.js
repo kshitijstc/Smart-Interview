@@ -189,3 +189,23 @@ export const saveInterviewCode = async (req, res) => {
     res.status(500).json({ error: "Could not save code" });
   }
 };
+
+
+export const saveAudioUrl = async (req, res) => {
+  const { id } = req.params;
+  const { audioUrl } = req.body;
+  try {
+    const room = await prisma.room.findUnique({
+      where: { link:id },
+    });
+    await prisma.interview.update({
+      where: { id: room.interviewId },
+      data: { audioUrl }
+    });
+    console.log(`Saved audio URL for room ${id}: ${audioUrl}`);
+    res.status(200).json({ message: "Audio URL saved" });
+  } catch (err) {
+    console.error("Failed to save audio URL:", err);
+    res.status(500).json({ error: "Failed to save audio URL" });
+  } 
+};

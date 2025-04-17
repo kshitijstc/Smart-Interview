@@ -34,7 +34,7 @@ export default function CandidateDashboard() {
       now.isBefore(scheduled.add(10, "minute"))
     );
   };
-  console.log(interviews);
+  // console.log(interviews);
   const upcoming = interviews.filter((i) => i.status === "SCHEDULED");
   const past = interviews.filter((i) => i.status !== "SCHEDULED");
 

@@ -64,6 +64,15 @@ export default function InterviewerDashboard() {
   const upcoming = interviews.filter((i) => i.status === "SCHEDULED");
   const past = interviews.filter((i) => i.status !== "SCHEDULED");
 
+  const isJoinAvailable = (scheduledAt) => {
+    const now = dayjs();
+    const scheduled = dayjs(scheduledAt);
+    return (
+      now.isAfter(scheduled.subtract(10, "minute")) &&
+      now.isBefore(scheduled.add(10, "minute"))
+    );
+  };
+
   return (
     <div className="p-6">
       <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -120,7 +129,8 @@ export default function InterviewerDashboard() {
                     Status: {i.status}
                   </p>
                 </div>
-                {/* Jitsi link optional */}
+                
+                {/* {isJoinAvailable(i.scheduledAt) && ( */}
                 <a
                   href={`/join/${i.room.link}`}
                   target="_blank"
@@ -129,7 +139,7 @@ export default function InterviewerDashboard() {
                 >
                   Join Now
                 </a>
-                
+                {/* )} */}
               </div>
             ))}
           </div>

@@ -31,11 +31,14 @@ export default function Sidebar({ role }) {
           ${isOpen ? "translate-x-0" : "-translate-x-full"} 
           md:translate-x-0 md:static md:block`}
       >
-        <div
+        <div 
+        
           className="p-6 text-xl font-bold  bg-gradient-to-br from-blue-600 to-purple-500 bg-clip-text text-transparent font-bold 
         drop-shadow-sm"
         >
+          <Link href="/">
           Smart Interview
+          </Link>
         </div>
         {isOpen && (
         <button
@@ -75,7 +78,7 @@ export default function Sidebar({ role }) {
               localStorage.removeItem("token");
               window.location.href = "/";
             }}
-            className="flex items-center gap-3 text-red-500 mt-8"
+            className="flex items-center gap-3 text-red-500 mt-8 hover:text-red-700 cursor-pointer" 
           >
             <LogOut size={20} /> Logout
           </button>

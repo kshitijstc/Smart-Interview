@@ -51,24 +51,15 @@ model Interview {
   interviewer   User   @relation("Interviewer", fields: [interviewerId], references: [id])
   interviewerId String
 
-  candidateCode String?
-  room          Room?
-  scheduledAt   DateTime
-  status        InterviewStatus @default(SCHEDULED)
-  evaluation    Evaluation?
+  audioUrl    String?
+  codeHistory Json[]          @default([])
+  room        Room?
+  scheduledAt DateTime
+  status      InterviewStatus @default(SCHEDULED)
+  evaluation  Evaluation?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model Slot {
-  id            String @id @default(uuid())
-  interviewer   User   @relation(fields: [interviewerId], references: [id])
-  interviewerId String
-
-  startTime DateTime
-  endTime   DateTime
-  isBooked  Boolean  @default(false)
 }
 
 model Room {
@@ -96,4 +87,14 @@ model Assignment {
 
   interviewer   User   @relation("InterviewerAssignment", fields: [interviewerId], references: [id])
   interviewerId String
+}
+
+model Slot {
+  id            String @id @default(uuid())
+  interviewer   User   @relation(fields: [interviewerId], references: [id])
+  interviewerId String
+
+  startTime DateTime
+  endTime   DateTime
+  isBooked  Boolean  @default(false)
 }

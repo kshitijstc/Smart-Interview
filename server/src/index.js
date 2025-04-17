@@ -7,12 +7,14 @@ import dotenv from "dotenv";
 import cors from "cors";
 import http from 'http';
 import { Server } from 'socket.io';
+import { PrismaClient } from "./generated/prisma/client.js";
 
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const prisma = new PrismaClient();
 
 // Middleware
 app.use(cors());
@@ -43,9 +45,24 @@ io.on('connection', (socket) => {
     console.log(`📥 ${socket.id} joined room ${roomId}`);
   });
 
-  socket.on('codeChange', ({ roomId, code }) => {
+  socket.on('codeChange', async ({ roomId, code }) => {
     socket.to(roomId).emit('codeUpdate', code);
     console.log(`Code received for room ${roomId}:`, code);
+    try {
+      const room = await prisma.room.findUnique({ where: { link: roomId } });
+      if (!room) throw new Error("Room not found");
+      const interview = await prisma.interview.findUnique({
+        where: { id: room.interviewId }
+      });
+      const updatedHistory = [...(interview?.codeHistory || []), { code, timestamp: new Date().toISOString() }];
+      await prisma.interview.update({
+        where: { id: room.interviewId },
+        data: { codeHistory: updatedHistory }
+      });
+      console.log(`Updated code history for interview ${room.interviewId}`);
+    } catch (error) {
+      console.error("Error updating code history:", error);
+    }
   });
 
   socket.on('disconnect', () => {

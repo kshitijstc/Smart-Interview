@@ -24,11 +24,6 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Interview = $Result.DefaultSelection<Prisma.$InterviewPayload>
 /**
- * Model Slot
- * 
- */
-export type Slot = $Result.DefaultSelection<Prisma.$SlotPayload>
-/**
  * Model Room
  * 
  */
@@ -43,6 +38,11 @@ export type Evaluation = $Result.DefaultSelection<Prisma.$EvaluationPayload>
  * 
  */
 export type Assignment = $Result.DefaultSelection<Prisma.$AssignmentPayload>
+/**
+ * Model Slot
+ * 
+ */
+export type Slot = $Result.DefaultSelection<Prisma.$SlotPayload>
 
 /**
  * Enums
@@ -221,16 +221,6 @@ export class PrismaClient<
   get interview(): Prisma.InterviewDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.slot`: Exposes CRUD operations for the **Slot** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Slots
-    * const slots = await prisma.slot.findMany()
-    * ```
-    */
-  get slot(): Prisma.SlotDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.room`: Exposes CRUD operations for the **Room** model.
     * Example usage:
     * ```ts
@@ -259,6 +249,16 @@ export class PrismaClient<
     * ```
     */
   get assignment(): Prisma.AssignmentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.slot`: Exposes CRUD operations for the **Slot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Slots
+    * const slots = await prisma.slot.findMany()
+    * ```
+    */
+  get slot(): Prisma.SlotDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -701,10 +701,10 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Interview: 'Interview',
-    Slot: 'Slot',
     Room: 'Room',
     Evaluation: 'Evaluation',
-    Assignment: 'Assignment'
+    Assignment: 'Assignment',
+    Slot: 'Slot'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -723,7 +723,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "interview" | "slot" | "room" | "evaluation" | "assignment"
+      modelProps: "user" | "interview" | "room" | "evaluation" | "assignment" | "slot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -872,80 +872,6 @@ export namespace Prisma {
           count: {
             args: Prisma.InterviewCountArgs<ExtArgs>
             result: $Utils.Optional<InterviewCountAggregateOutputType> | number
-          }
-        }
-      }
-      Slot: {
-        payload: Prisma.$SlotPayload<ExtArgs>
-        fields: Prisma.SlotFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.SlotFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.SlotFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
-          }
-          findFirst: {
-            args: Prisma.SlotFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.SlotFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
-          }
-          findMany: {
-            args: Prisma.SlotFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
-          }
-          create: {
-            args: Prisma.SlotCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
-          }
-          createMany: {
-            args: Prisma.SlotCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.SlotCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
-          }
-          delete: {
-            args: Prisma.SlotDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
-          }
-          update: {
-            args: Prisma.SlotUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
-          }
-          deleteMany: {
-            args: Prisma.SlotDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.SlotUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.SlotUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
-          }
-          upsert: {
-            args: Prisma.SlotUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
-          }
-          aggregate: {
-            args: Prisma.SlotAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSlot>
-          }
-          groupBy: {
-            args: Prisma.SlotGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SlotGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.SlotCountArgs<ExtArgs>
-            result: $Utils.Optional<SlotCountAggregateOutputType> | number
           }
         }
       }
@@ -1171,6 +1097,80 @@ export namespace Prisma {
           }
         }
       }
+      Slot: {
+        payload: Prisma.$SlotPayload<ExtArgs>
+        fields: Prisma.SlotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SlotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SlotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          findFirst: {
+            args: Prisma.SlotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SlotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          findMany: {
+            args: Prisma.SlotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
+          }
+          create: {
+            args: Prisma.SlotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          createMany: {
+            args: Prisma.SlotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SlotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
+          }
+          delete: {
+            args: Prisma.SlotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          update: {
+            args: Prisma.SlotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          deleteMany: {
+            args: Prisma.SlotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SlotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SlotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>[]
+          }
+          upsert: {
+            args: Prisma.SlotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SlotPayload>
+          }
+          aggregate: {
+            args: Prisma.SlotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSlot>
+          }
+          groupBy: {
+            args: Prisma.SlotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SlotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SlotCountArgs<ExtArgs>
+            result: $Utils.Optional<SlotCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1257,10 +1257,10 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     interview?: InterviewOmit
-    slot?: SlotOmit
     room?: RoomOmit
     evaluation?: EvaluationOmit
     assignment?: AssignmentOmit
+    slot?: SlotOmit
   }
 
   /* Types for Logging */
@@ -2643,7 +2643,7 @@ export namespace Prisma {
     id: string | null
     candidateId: string | null
     interviewerId: string | null
-    candidateCode: string | null
+    audioUrl: string | null
     scheduledAt: Date | null
     status: $Enums.InterviewStatus | null
     createdAt: Date | null
@@ -2654,7 +2654,7 @@ export namespace Prisma {
     id: string | null
     candidateId: string | null
     interviewerId: string | null
-    candidateCode: string | null
+    audioUrl: string | null
     scheduledAt: Date | null
     status: $Enums.InterviewStatus | null
     createdAt: Date | null
@@ -2665,7 +2665,8 @@ export namespace Prisma {
     id: number
     candidateId: number
     interviewerId: number
-    candidateCode: number
+    audioUrl: number
+    codeHistory: number
     scheduledAt: number
     status: number
     createdAt: number
@@ -2678,7 +2679,7 @@ export namespace Prisma {
     id?: true
     candidateId?: true
     interviewerId?: true
-    candidateCode?: true
+    audioUrl?: true
     scheduledAt?: true
     status?: true
     createdAt?: true
@@ -2689,7 +2690,7 @@ export namespace Prisma {
     id?: true
     candidateId?: true
     interviewerId?: true
-    candidateCode?: true
+    audioUrl?: true
     scheduledAt?: true
     status?: true
     createdAt?: true
@@ -2700,7 +2701,8 @@ export namespace Prisma {
     id?: true
     candidateId?: true
     interviewerId?: true
-    candidateCode?: true
+    audioUrl?: true
+    codeHistory?: true
     scheduledAt?: true
     status?: true
     createdAt?: true
@@ -2784,7 +2786,8 @@ export namespace Prisma {
     id: string
     candidateId: string
     interviewerId: string
-    candidateCode: string | null
+    audioUrl: string | null
+    codeHistory: JsonValue[]
     scheduledAt: Date
     status: $Enums.InterviewStatus
     createdAt: Date
@@ -2812,7 +2815,8 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
-    candidateCode?: boolean
+    audioUrl?: boolean
+    codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -2827,7 +2831,8 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
-    candidateCode?: boolean
+    audioUrl?: boolean
+    codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -2840,7 +2845,8 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
-    candidateCode?: boolean
+    audioUrl?: boolean
+    codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
@@ -2853,14 +2859,15 @@ export namespace Prisma {
     id?: boolean
     candidateId?: boolean
     interviewerId?: boolean
-    candidateCode?: boolean
+    audioUrl?: boolean
+    codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type InterviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateId" | "interviewerId" | "candidateCode" | "scheduledAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["interview"]>
+  export type InterviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateId" | "interviewerId" | "audioUrl" | "codeHistory" | "scheduledAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["interview"]>
   export type InterviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidate?: boolean | UserDefaultArgs<ExtArgs>
     interviewer?: boolean | UserDefaultArgs<ExtArgs>
@@ -2888,7 +2895,8 @@ export namespace Prisma {
       id: string
       candidateId: string
       interviewerId: string
-      candidateCode: string | null
+      audioUrl: string | null
+      codeHistory: Prisma.JsonValue[]
       scheduledAt: Date
       status: $Enums.InterviewStatus
       createdAt: Date
@@ -3323,7 +3331,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Interview", 'String'>
     readonly candidateId: FieldRef<"Interview", 'String'>
     readonly interviewerId: FieldRef<"Interview", 'String'>
-    readonly candidateCode: FieldRef<"Interview", 'String'>
+    readonly audioUrl: FieldRef<"Interview", 'String'>
+    readonly codeHistory: FieldRef<"Interview", 'Json[]'>
     readonly scheduledAt: FieldRef<"Interview", 'DateTime'>
     readonly status: FieldRef<"Interview", 'InterviewStatus'>
     readonly createdAt: FieldRef<"Interview", 'DateTime'>
@@ -3777,1064 +3786,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: InterviewInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Slot
-   */
-
-  export type AggregateSlot = {
-    _count: SlotCountAggregateOutputType | null
-    _min: SlotMinAggregateOutputType | null
-    _max: SlotMaxAggregateOutputType | null
-  }
-
-  export type SlotMinAggregateOutputType = {
-    id: string | null
-    interviewerId: string | null
-    startTime: Date | null
-    endTime: Date | null
-    isBooked: boolean | null
-  }
-
-  export type SlotMaxAggregateOutputType = {
-    id: string | null
-    interviewerId: string | null
-    startTime: Date | null
-    endTime: Date | null
-    isBooked: boolean | null
-  }
-
-  export type SlotCountAggregateOutputType = {
-    id: number
-    interviewerId: number
-    startTime: number
-    endTime: number
-    isBooked: number
-    _all: number
-  }
-
-
-  export type SlotMinAggregateInputType = {
-    id?: true
-    interviewerId?: true
-    startTime?: true
-    endTime?: true
-    isBooked?: true
-  }
-
-  export type SlotMaxAggregateInputType = {
-    id?: true
-    interviewerId?: true
-    startTime?: true
-    endTime?: true
-    isBooked?: true
-  }
-
-  export type SlotCountAggregateInputType = {
-    id?: true
-    interviewerId?: true
-    startTime?: true
-    endTime?: true
-    isBooked?: true
-    _all?: true
-  }
-
-  export type SlotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Slot to aggregate.
-     */
-    where?: SlotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Slots to fetch.
-     */
-    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: SlotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Slots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Slots.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Slots
-    **/
-    _count?: true | SlotCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: SlotMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: SlotMaxAggregateInputType
-  }
-
-  export type GetSlotAggregateType<T extends SlotAggregateArgs> = {
-        [P in keyof T & keyof AggregateSlot]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateSlot[P]>
-      : GetScalarType<T[P], AggregateSlot[P]>
-  }
-
-
-
-
-  export type SlotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SlotWhereInput
-    orderBy?: SlotOrderByWithAggregationInput | SlotOrderByWithAggregationInput[]
-    by: SlotScalarFieldEnum[] | SlotScalarFieldEnum
-    having?: SlotScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: SlotCountAggregateInputType | true
-    _min?: SlotMinAggregateInputType
-    _max?: SlotMaxAggregateInputType
-  }
-
-  export type SlotGroupByOutputType = {
-    id: string
-    interviewerId: string
-    startTime: Date
-    endTime: Date
-    isBooked: boolean
-    _count: SlotCountAggregateOutputType | null
-    _min: SlotMinAggregateOutputType | null
-    _max: SlotMaxAggregateOutputType | null
-  }
-
-  type GetSlotGroupByPayload<T extends SlotGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<SlotGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof SlotGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], SlotGroupByOutputType[P]>
-            : GetScalarType<T[P], SlotGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type SlotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    interviewerId?: boolean
-    startTime?: boolean
-    endTime?: boolean
-    isBooked?: boolean
-    interviewer?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["slot"]>
-
-  export type SlotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    interviewerId?: boolean
-    startTime?: boolean
-    endTime?: boolean
-    isBooked?: boolean
-    interviewer?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["slot"]>
-
-  export type SlotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    interviewerId?: boolean
-    startTime?: boolean
-    endTime?: boolean
-    isBooked?: boolean
-    interviewer?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["slot"]>
-
-  export type SlotSelectScalar = {
-    id?: boolean
-    interviewerId?: boolean
-    startTime?: boolean
-    endTime?: boolean
-    isBooked?: boolean
-  }
-
-  export type SlotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "interviewerId" | "startTime" | "endTime" | "isBooked", ExtArgs["result"]["slot"]>
-  export type SlotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    interviewer?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type SlotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    interviewer?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type SlotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    interviewer?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $SlotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Slot"
-    objects: {
-      interviewer: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      interviewerId: string
-      startTime: Date
-      endTime: Date
-      isBooked: boolean
-    }, ExtArgs["result"]["slot"]>
-    composites: {}
-  }
-
-  type SlotGetPayload<S extends boolean | null | undefined | SlotDefaultArgs> = $Result.GetResult<Prisma.$SlotPayload, S>
-
-  type SlotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SlotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SlotCountAggregateInputType | true
-    }
-
-  export interface SlotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Slot'], meta: { name: 'Slot' } }
-    /**
-     * Find zero or one Slot that matches the filter.
-     * @param {SlotFindUniqueArgs} args - Arguments to find a Slot
-     * @example
-     * // Get one Slot
-     * const slot = await prisma.slot.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends SlotFindUniqueArgs>(args: SelectSubset<T, SlotFindUniqueArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Slot that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {SlotFindUniqueOrThrowArgs} args - Arguments to find a Slot
-     * @example
-     * // Get one Slot
-     * const slot = await prisma.slot.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends SlotFindUniqueOrThrowArgs>(args: SelectSubset<T, SlotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Slot that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SlotFindFirstArgs} args - Arguments to find a Slot
-     * @example
-     * // Get one Slot
-     * const slot = await prisma.slot.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends SlotFindFirstArgs>(args?: SelectSubset<T, SlotFindFirstArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Slot that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SlotFindFirstOrThrowArgs} args - Arguments to find a Slot
-     * @example
-     * // Get one Slot
-     * const slot = await prisma.slot.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends SlotFindFirstOrThrowArgs>(args?: SelectSubset<T, SlotFindFirstOrThrowArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Slots that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SlotFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Slots
-     * const slots = await prisma.slot.findMany()
-     * 
-     * // Get first 10 Slots
-     * const slots = await prisma.slot.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const slotWithIdOnly = await prisma.slot.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends SlotFindManyArgs>(args?: SelectSubset<T, SlotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Slot.
-     * @param {SlotCreateArgs} args - Arguments to create a Slot.
-     * @example
-     * // Create one Slot
-     * const Slot = await prisma.slot.create({
-     *   data: {
-     *     // ... data to create a Slot
-     *   }
-     * })
-     * 
-     */
-    create<T extends SlotCreateArgs>(args: SelectSubset<T, SlotCreateArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Slots.
-     * @param {SlotCreateManyArgs} args - Arguments to create many Slots.
-     * @example
-     * // Create many Slots
-     * const slot = await prisma.slot.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends SlotCreateManyArgs>(args?: SelectSubset<T, SlotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Slots and returns the data saved in the database.
-     * @param {SlotCreateManyAndReturnArgs} args - Arguments to create many Slots.
-     * @example
-     * // Create many Slots
-     * const slot = await prisma.slot.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Slots and only return the `id`
-     * const slotWithIdOnly = await prisma.slot.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends SlotCreateManyAndReturnArgs>(args?: SelectSubset<T, SlotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Slot.
-     * @param {SlotDeleteArgs} args - Arguments to delete one Slot.
-     * @example
-     * // Delete one Slot
-     * const Slot = await prisma.slot.delete({
-     *   where: {
-     *     // ... filter to delete one Slot
-     *   }
-     * })
-     * 
-     */
-    delete<T extends SlotDeleteArgs>(args: SelectSubset<T, SlotDeleteArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Slot.
-     * @param {SlotUpdateArgs} args - Arguments to update one Slot.
-     * @example
-     * // Update one Slot
-     * const slot = await prisma.slot.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends SlotUpdateArgs>(args: SelectSubset<T, SlotUpdateArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Slots.
-     * @param {SlotDeleteManyArgs} args - Arguments to filter Slots to delete.
-     * @example
-     * // Delete a few Slots
-     * const { count } = await prisma.slot.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends SlotDeleteManyArgs>(args?: SelectSubset<T, SlotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Slots.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SlotUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Slots
-     * const slot = await prisma.slot.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends SlotUpdateManyArgs>(args: SelectSubset<T, SlotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Slots and returns the data updated in the database.
-     * @param {SlotUpdateManyAndReturnArgs} args - Arguments to update many Slots.
-     * @example
-     * // Update many Slots
-     * const slot = await prisma.slot.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Slots and only return the `id`
-     * const slotWithIdOnly = await prisma.slot.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends SlotUpdateManyAndReturnArgs>(args: SelectSubset<T, SlotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Slot.
-     * @param {SlotUpsertArgs} args - Arguments to update or create a Slot.
-     * @example
-     * // Update or create a Slot
-     * const slot = await prisma.slot.upsert({
-     *   create: {
-     *     // ... data to create a Slot
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Slot we want to update
-     *   }
-     * })
-     */
-    upsert<T extends SlotUpsertArgs>(args: SelectSubset<T, SlotUpsertArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Slots.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SlotCountArgs} args - Arguments to filter Slots to count.
-     * @example
-     * // Count the number of Slots
-     * const count = await prisma.slot.count({
-     *   where: {
-     *     // ... the filter for the Slots we want to count
-     *   }
-     * })
-    **/
-    count<T extends SlotCountArgs>(
-      args?: Subset<T, SlotCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], SlotCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Slot.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SlotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends SlotAggregateArgs>(args: Subset<T, SlotAggregateArgs>): Prisma.PrismaPromise<GetSlotAggregateType<T>>
-
-    /**
-     * Group by Slot.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SlotGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends SlotGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SlotGroupByArgs['orderBy'] }
-        : { orderBy?: SlotGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, SlotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSlotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Slot model
-   */
-  readonly fields: SlotFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Slot.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__SlotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    interviewer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Slot model
-   */
-  interface SlotFieldRefs {
-    readonly id: FieldRef<"Slot", 'String'>
-    readonly interviewerId: FieldRef<"Slot", 'String'>
-    readonly startTime: FieldRef<"Slot", 'DateTime'>
-    readonly endTime: FieldRef<"Slot", 'DateTime'>
-    readonly isBooked: FieldRef<"Slot", 'Boolean'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Slot findUnique
-   */
-  export type SlotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * Filter, which Slot to fetch.
-     */
-    where: SlotWhereUniqueInput
-  }
-
-  /**
-   * Slot findUniqueOrThrow
-   */
-  export type SlotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * Filter, which Slot to fetch.
-     */
-    where: SlotWhereUniqueInput
-  }
-
-  /**
-   * Slot findFirst
-   */
-  export type SlotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * Filter, which Slot to fetch.
-     */
-    where?: SlotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Slots to fetch.
-     */
-    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Slots.
-     */
-    cursor?: SlotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Slots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Slots.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Slots.
-     */
-    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
-  }
-
-  /**
-   * Slot findFirstOrThrow
-   */
-  export type SlotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * Filter, which Slot to fetch.
-     */
-    where?: SlotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Slots to fetch.
-     */
-    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Slots.
-     */
-    cursor?: SlotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Slots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Slots.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Slots.
-     */
-    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
-  }
-
-  /**
-   * Slot findMany
-   */
-  export type SlotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * Filter, which Slots to fetch.
-     */
-    where?: SlotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Slots to fetch.
-     */
-    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Slots.
-     */
-    cursor?: SlotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Slots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Slots.
-     */
-    skip?: number
-    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
-  }
-
-  /**
-   * Slot create
-   */
-  export type SlotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Slot.
-     */
-    data: XOR<SlotCreateInput, SlotUncheckedCreateInput>
-  }
-
-  /**
-   * Slot createMany
-   */
-  export type SlotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Slots.
-     */
-    data: SlotCreateManyInput | SlotCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Slot createManyAndReturn
-   */
-  export type SlotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * The data used to create many Slots.
-     */
-    data: SlotCreateManyInput | SlotCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Slot update
-   */
-  export type SlotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Slot.
-     */
-    data: XOR<SlotUpdateInput, SlotUncheckedUpdateInput>
-    /**
-     * Choose, which Slot to update.
-     */
-    where: SlotWhereUniqueInput
-  }
-
-  /**
-   * Slot updateMany
-   */
-  export type SlotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Slots.
-     */
-    data: XOR<SlotUpdateManyMutationInput, SlotUncheckedUpdateManyInput>
-    /**
-     * Filter which Slots to update
-     */
-    where?: SlotWhereInput
-    /**
-     * Limit how many Slots to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Slot updateManyAndReturn
-   */
-  export type SlotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * The data used to update Slots.
-     */
-    data: XOR<SlotUpdateManyMutationInput, SlotUncheckedUpdateManyInput>
-    /**
-     * Filter which Slots to update
-     */
-    where?: SlotWhereInput
-    /**
-     * Limit how many Slots to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Slot upsert
-   */
-  export type SlotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Slot to update in case it exists.
-     */
-    where: SlotWhereUniqueInput
-    /**
-     * In case the Slot found by the `where` argument doesn't exist, create a new Slot with this data.
-     */
-    create: XOR<SlotCreateInput, SlotUncheckedCreateInput>
-    /**
-     * In case the Slot was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<SlotUpdateInput, SlotUncheckedUpdateInput>
-  }
-
-  /**
-   * Slot delete
-   */
-  export type SlotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
-    /**
-     * Filter which Slot to delete.
-     */
-    where: SlotWhereUniqueInput
-  }
-
-  /**
-   * Slot deleteMany
-   */
-  export type SlotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Slots to delete
-     */
-    where?: SlotWhereInput
-    /**
-     * Limit how many Slots to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Slot without action
-   */
-  export type SlotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Slot
-     */
-    select?: SlotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Slot
-     */
-    omit?: SlotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SlotInclude<ExtArgs> | null
   }
 
 
@@ -8016,6 +6967,1064 @@ export namespace Prisma {
 
 
   /**
+   * Model Slot
+   */
+
+  export type AggregateSlot = {
+    _count: SlotCountAggregateOutputType | null
+    _min: SlotMinAggregateOutputType | null
+    _max: SlotMaxAggregateOutputType | null
+  }
+
+  export type SlotMinAggregateOutputType = {
+    id: string | null
+    interviewerId: string | null
+    startTime: Date | null
+    endTime: Date | null
+    isBooked: boolean | null
+  }
+
+  export type SlotMaxAggregateOutputType = {
+    id: string | null
+    interviewerId: string | null
+    startTime: Date | null
+    endTime: Date | null
+    isBooked: boolean | null
+  }
+
+  export type SlotCountAggregateOutputType = {
+    id: number
+    interviewerId: number
+    startTime: number
+    endTime: number
+    isBooked: number
+    _all: number
+  }
+
+
+  export type SlotMinAggregateInputType = {
+    id?: true
+    interviewerId?: true
+    startTime?: true
+    endTime?: true
+    isBooked?: true
+  }
+
+  export type SlotMaxAggregateInputType = {
+    id?: true
+    interviewerId?: true
+    startTime?: true
+    endTime?: true
+    isBooked?: true
+  }
+
+  export type SlotCountAggregateInputType = {
+    id?: true
+    interviewerId?: true
+    startTime?: true
+    endTime?: true
+    isBooked?: true
+    _all?: true
+  }
+
+  export type SlotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Slot to aggregate.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Slots
+    **/
+    _count?: true | SlotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SlotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SlotMaxAggregateInputType
+  }
+
+  export type GetSlotAggregateType<T extends SlotAggregateArgs> = {
+        [P in keyof T & keyof AggregateSlot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSlot[P]>
+      : GetScalarType<T[P], AggregateSlot[P]>
+  }
+
+
+
+
+  export type SlotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SlotWhereInput
+    orderBy?: SlotOrderByWithAggregationInput | SlotOrderByWithAggregationInput[]
+    by: SlotScalarFieldEnum[] | SlotScalarFieldEnum
+    having?: SlotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SlotCountAggregateInputType | true
+    _min?: SlotMinAggregateInputType
+    _max?: SlotMaxAggregateInputType
+  }
+
+  export type SlotGroupByOutputType = {
+    id: string
+    interviewerId: string
+    startTime: Date
+    endTime: Date
+    isBooked: boolean
+    _count: SlotCountAggregateOutputType | null
+    _min: SlotMinAggregateOutputType | null
+    _max: SlotMaxAggregateOutputType | null
+  }
+
+  type GetSlotGroupByPayload<T extends SlotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SlotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SlotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SlotGroupByOutputType[P]>
+            : GetScalarType<T[P], SlotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SlotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    interviewerId?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    isBooked?: boolean
+    interviewer?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["slot"]>
+
+  export type SlotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    interviewerId?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    isBooked?: boolean
+    interviewer?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["slot"]>
+
+  export type SlotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    interviewerId?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    isBooked?: boolean
+    interviewer?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["slot"]>
+
+  export type SlotSelectScalar = {
+    id?: boolean
+    interviewerId?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    isBooked?: boolean
+  }
+
+  export type SlotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "interviewerId" | "startTime" | "endTime" | "isBooked", ExtArgs["result"]["slot"]>
+  export type SlotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interviewer?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SlotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interviewer?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SlotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    interviewer?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SlotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Slot"
+    objects: {
+      interviewer: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      interviewerId: string
+      startTime: Date
+      endTime: Date
+      isBooked: boolean
+    }, ExtArgs["result"]["slot"]>
+    composites: {}
+  }
+
+  type SlotGetPayload<S extends boolean | null | undefined | SlotDefaultArgs> = $Result.GetResult<Prisma.$SlotPayload, S>
+
+  type SlotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SlotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SlotCountAggregateInputType | true
+    }
+
+  export interface SlotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Slot'], meta: { name: 'Slot' } }
+    /**
+     * Find zero or one Slot that matches the filter.
+     * @param {SlotFindUniqueArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SlotFindUniqueArgs>(args: SelectSubset<T, SlotFindUniqueArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Slot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SlotFindUniqueOrThrowArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SlotFindUniqueOrThrowArgs>(args: SelectSubset<T, SlotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Slot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotFindFirstArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SlotFindFirstArgs>(args?: SelectSubset<T, SlotFindFirstArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Slot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotFindFirstOrThrowArgs} args - Arguments to find a Slot
+     * @example
+     * // Get one Slot
+     * const slot = await prisma.slot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SlotFindFirstOrThrowArgs>(args?: SelectSubset<T, SlotFindFirstOrThrowArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Slots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Slots
+     * const slots = await prisma.slot.findMany()
+     * 
+     * // Get first 10 Slots
+     * const slots = await prisma.slot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const slotWithIdOnly = await prisma.slot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SlotFindManyArgs>(args?: SelectSubset<T, SlotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Slot.
+     * @param {SlotCreateArgs} args - Arguments to create a Slot.
+     * @example
+     * // Create one Slot
+     * const Slot = await prisma.slot.create({
+     *   data: {
+     *     // ... data to create a Slot
+     *   }
+     * })
+     * 
+     */
+    create<T extends SlotCreateArgs>(args: SelectSubset<T, SlotCreateArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Slots.
+     * @param {SlotCreateManyArgs} args - Arguments to create many Slots.
+     * @example
+     * // Create many Slots
+     * const slot = await prisma.slot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SlotCreateManyArgs>(args?: SelectSubset<T, SlotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Slots and returns the data saved in the database.
+     * @param {SlotCreateManyAndReturnArgs} args - Arguments to create many Slots.
+     * @example
+     * // Create many Slots
+     * const slot = await prisma.slot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Slots and only return the `id`
+     * const slotWithIdOnly = await prisma.slot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SlotCreateManyAndReturnArgs>(args?: SelectSubset<T, SlotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Slot.
+     * @param {SlotDeleteArgs} args - Arguments to delete one Slot.
+     * @example
+     * // Delete one Slot
+     * const Slot = await prisma.slot.delete({
+     *   where: {
+     *     // ... filter to delete one Slot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SlotDeleteArgs>(args: SelectSubset<T, SlotDeleteArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Slot.
+     * @param {SlotUpdateArgs} args - Arguments to update one Slot.
+     * @example
+     * // Update one Slot
+     * const slot = await prisma.slot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SlotUpdateArgs>(args: SelectSubset<T, SlotUpdateArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Slots.
+     * @param {SlotDeleteManyArgs} args - Arguments to filter Slots to delete.
+     * @example
+     * // Delete a few Slots
+     * const { count } = await prisma.slot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SlotDeleteManyArgs>(args?: SelectSubset<T, SlotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Slots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Slots
+     * const slot = await prisma.slot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SlotUpdateManyArgs>(args: SelectSubset<T, SlotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Slots and returns the data updated in the database.
+     * @param {SlotUpdateManyAndReturnArgs} args - Arguments to update many Slots.
+     * @example
+     * // Update many Slots
+     * const slot = await prisma.slot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Slots and only return the `id`
+     * const slotWithIdOnly = await prisma.slot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SlotUpdateManyAndReturnArgs>(args: SelectSubset<T, SlotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Slot.
+     * @param {SlotUpsertArgs} args - Arguments to update or create a Slot.
+     * @example
+     * // Update or create a Slot
+     * const slot = await prisma.slot.upsert({
+     *   create: {
+     *     // ... data to create a Slot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Slot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SlotUpsertArgs>(args: SelectSubset<T, SlotUpsertArgs<ExtArgs>>): Prisma__SlotClient<$Result.GetResult<Prisma.$SlotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Slots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotCountArgs} args - Arguments to filter Slots to count.
+     * @example
+     * // Count the number of Slots
+     * const count = await prisma.slot.count({
+     *   where: {
+     *     // ... the filter for the Slots we want to count
+     *   }
+     * })
+    **/
+    count<T extends SlotCountArgs>(
+      args?: Subset<T, SlotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SlotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Slot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SlotAggregateArgs>(args: Subset<T, SlotAggregateArgs>): Prisma.PrismaPromise<GetSlotAggregateType<T>>
+
+    /**
+     * Group by Slot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SlotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SlotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SlotGroupByArgs['orderBy'] }
+        : { orderBy?: SlotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SlotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSlotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Slot model
+   */
+  readonly fields: SlotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Slot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SlotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    interviewer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Slot model
+   */
+  interface SlotFieldRefs {
+    readonly id: FieldRef<"Slot", 'String'>
+    readonly interviewerId: FieldRef<"Slot", 'String'>
+    readonly startTime: FieldRef<"Slot", 'DateTime'>
+    readonly endTime: FieldRef<"Slot", 'DateTime'>
+    readonly isBooked: FieldRef<"Slot", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Slot findUnique
+   */
+  export type SlotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot findUniqueOrThrow
+   */
+  export type SlotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot findFirst
+   */
+  export type SlotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Slots.
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Slots.
+     */
+    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
+  }
+
+  /**
+   * Slot findFirstOrThrow
+   */
+  export type SlotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slot to fetch.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Slots.
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Slots.
+     */
+    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
+  }
+
+  /**
+   * Slot findMany
+   */
+  export type SlotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter, which Slots to fetch.
+     */
+    where?: SlotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Slots to fetch.
+     */
+    orderBy?: SlotOrderByWithRelationInput | SlotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Slots.
+     */
+    cursor?: SlotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Slots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Slots.
+     */
+    skip?: number
+    distinct?: SlotScalarFieldEnum | SlotScalarFieldEnum[]
+  }
+
+  /**
+   * Slot create
+   */
+  export type SlotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Slot.
+     */
+    data: XOR<SlotCreateInput, SlotUncheckedCreateInput>
+  }
+
+  /**
+   * Slot createMany
+   */
+  export type SlotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Slots.
+     */
+    data: SlotCreateManyInput | SlotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Slot createManyAndReturn
+   */
+  export type SlotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * The data used to create many Slots.
+     */
+    data: SlotCreateManyInput | SlotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Slot update
+   */
+  export type SlotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Slot.
+     */
+    data: XOR<SlotUpdateInput, SlotUncheckedUpdateInput>
+    /**
+     * Choose, which Slot to update.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot updateMany
+   */
+  export type SlotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Slots.
+     */
+    data: XOR<SlotUpdateManyMutationInput, SlotUncheckedUpdateManyInput>
+    /**
+     * Filter which Slots to update
+     */
+    where?: SlotWhereInput
+    /**
+     * Limit how many Slots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Slot updateManyAndReturn
+   */
+  export type SlotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * The data used to update Slots.
+     */
+    data: XOR<SlotUpdateManyMutationInput, SlotUncheckedUpdateManyInput>
+    /**
+     * Filter which Slots to update
+     */
+    where?: SlotWhereInput
+    /**
+     * Limit how many Slots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Slot upsert
+   */
+  export type SlotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Slot to update in case it exists.
+     */
+    where: SlotWhereUniqueInput
+    /**
+     * In case the Slot found by the `where` argument doesn't exist, create a new Slot with this data.
+     */
+    create: XOR<SlotCreateInput, SlotUncheckedCreateInput>
+    /**
+     * In case the Slot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SlotUpdateInput, SlotUncheckedUpdateInput>
+  }
+
+  /**
+   * Slot delete
+   */
+  export type SlotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+    /**
+     * Filter which Slot to delete.
+     */
+    where: SlotWhereUniqueInput
+  }
+
+  /**
+   * Slot deleteMany
+   */
+  export type SlotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Slots to delete
+     */
+    where?: SlotWhereInput
+    /**
+     * Limit how many Slots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Slot without action
+   */
+  export type SlotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Slot
+     */
+    select?: SlotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Slot
+     */
+    omit?: SlotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SlotInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -8046,7 +8055,8 @@ export namespace Prisma {
     id: 'id',
     candidateId: 'candidateId',
     interviewerId: 'interviewerId',
-    candidateCode: 'candidateCode',
+    audioUrl: 'audioUrl',
+    codeHistory: 'codeHistory',
     scheduledAt: 'scheduledAt',
     status: 'status',
     createdAt: 'createdAt',
@@ -8054,17 +8064,6 @@ export namespace Prisma {
   };
 
   export type InterviewScalarFieldEnum = (typeof InterviewScalarFieldEnum)[keyof typeof InterviewScalarFieldEnum]
-
-
-  export const SlotScalarFieldEnum: {
-    id: 'id',
-    interviewerId: 'interviewerId',
-    startTime: 'startTime',
-    endTime: 'endTime',
-    isBooked: 'isBooked'
-  };
-
-  export type SlotScalarFieldEnum = (typeof SlotScalarFieldEnum)[keyof typeof SlotScalarFieldEnum]
 
 
   export const RoomScalarFieldEnum: {
@@ -8095,6 +8094,17 @@ export namespace Prisma {
   };
 
   export type AssignmentScalarFieldEnum = (typeof AssignmentScalarFieldEnum)[keyof typeof AssignmentScalarFieldEnum]
+
+
+  export const SlotScalarFieldEnum: {
+    id: 'id',
+    interviewerId: 'interviewerId',
+    startTime: 'startTime',
+    endTime: 'endTime',
+    isBooked: 'isBooked'
+  };
+
+  export type SlotScalarFieldEnum = (typeof SlotScalarFieldEnum)[keyof typeof SlotScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8169,6 +8179,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json[]'
+   */
+  export type ListJsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
    * Reference to a field of type 'InterviewStatus'
    */
   export type EnumInterviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InterviewStatus'>
@@ -8183,13 +8207,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -8200,6 +8217,13 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -8304,7 +8328,8 @@ export namespace Prisma {
     id?: StringFilter<"Interview"> | string
     candidateId?: StringFilter<"Interview"> | string
     interviewerId?: StringFilter<"Interview"> | string
-    candidateCode?: StringNullableFilter<"Interview"> | string | null
+    audioUrl?: StringNullableFilter<"Interview"> | string | null
+    codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeFilter<"Interview"> | Date | string
@@ -8319,7 +8344,8 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
-    candidateCode?: SortOrderInput | SortOrder
+    audioUrl?: SortOrderInput | SortOrder
+    codeHistory?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -8337,7 +8363,8 @@ export namespace Prisma {
     NOT?: InterviewWhereInput | InterviewWhereInput[]
     candidateId?: StringFilter<"Interview"> | string
     interviewerId?: StringFilter<"Interview"> | string
-    candidateCode?: StringNullableFilter<"Interview"> | string | null
+    audioUrl?: StringNullableFilter<"Interview"> | string | null
+    codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeFilter<"Interview"> | Date | string
@@ -8352,7 +8379,8 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
-    candidateCode?: SortOrderInput | SortOrder
+    audioUrl?: SortOrderInput | SortOrder
+    codeHistory?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -8369,66 +8397,12 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Interview"> | string
     candidateId?: StringWithAggregatesFilter<"Interview"> | string
     interviewerId?: StringWithAggregatesFilter<"Interview"> | string
-    candidateCode?: StringNullableWithAggregatesFilter<"Interview"> | string | null
+    audioUrl?: StringNullableWithAggregatesFilter<"Interview"> | string | null
+    codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusWithAggregatesFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
-  }
-
-  export type SlotWhereInput = {
-    AND?: SlotWhereInput | SlotWhereInput[]
-    OR?: SlotWhereInput[]
-    NOT?: SlotWhereInput | SlotWhereInput[]
-    id?: StringFilter<"Slot"> | string
-    interviewerId?: StringFilter<"Slot"> | string
-    startTime?: DateTimeFilter<"Slot"> | Date | string
-    endTime?: DateTimeFilter<"Slot"> | Date | string
-    isBooked?: BoolFilter<"Slot"> | boolean
-    interviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }
-
-  export type SlotOrderByWithRelationInput = {
-    id?: SortOrder
-    interviewerId?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
-    isBooked?: SortOrder
-    interviewer?: UserOrderByWithRelationInput
-  }
-
-  export type SlotWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: SlotWhereInput | SlotWhereInput[]
-    OR?: SlotWhereInput[]
-    NOT?: SlotWhereInput | SlotWhereInput[]
-    interviewerId?: StringFilter<"Slot"> | string
-    startTime?: DateTimeFilter<"Slot"> | Date | string
-    endTime?: DateTimeFilter<"Slot"> | Date | string
-    isBooked?: BoolFilter<"Slot"> | boolean
-    interviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
-
-  export type SlotOrderByWithAggregationInput = {
-    id?: SortOrder
-    interviewerId?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
-    isBooked?: SortOrder
-    _count?: SlotCountOrderByAggregateInput
-    _max?: SlotMaxOrderByAggregateInput
-    _min?: SlotMinOrderByAggregateInput
-  }
-
-  export type SlotScalarWhereWithAggregatesInput = {
-    AND?: SlotScalarWhereWithAggregatesInput | SlotScalarWhereWithAggregatesInput[]
-    OR?: SlotScalarWhereWithAggregatesInput[]
-    NOT?: SlotScalarWhereWithAggregatesInput | SlotScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Slot"> | string
-    interviewerId?: StringWithAggregatesFilter<"Slot"> | string
-    startTime?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
-    endTime?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
-    isBooked?: BoolWithAggregatesFilter<"Slot"> | boolean
   }
 
   export type RoomWhereInput = {
@@ -8586,6 +8560,61 @@ export namespace Prisma {
     interviewerId?: StringWithAggregatesFilter<"Assignment"> | string
   }
 
+  export type SlotWhereInput = {
+    AND?: SlotWhereInput | SlotWhereInput[]
+    OR?: SlotWhereInput[]
+    NOT?: SlotWhereInput | SlotWhereInput[]
+    id?: StringFilter<"Slot"> | string
+    interviewerId?: StringFilter<"Slot"> | string
+    startTime?: DateTimeFilter<"Slot"> | Date | string
+    endTime?: DateTimeFilter<"Slot"> | Date | string
+    isBooked?: BoolFilter<"Slot"> | boolean
+    interviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SlotOrderByWithRelationInput = {
+    id?: SortOrder
+    interviewerId?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    isBooked?: SortOrder
+    interviewer?: UserOrderByWithRelationInput
+  }
+
+  export type SlotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SlotWhereInput | SlotWhereInput[]
+    OR?: SlotWhereInput[]
+    NOT?: SlotWhereInput | SlotWhereInput[]
+    interviewerId?: StringFilter<"Slot"> | string
+    startTime?: DateTimeFilter<"Slot"> | Date | string
+    endTime?: DateTimeFilter<"Slot"> | Date | string
+    isBooked?: BoolFilter<"Slot"> | boolean
+    interviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type SlotOrderByWithAggregationInput = {
+    id?: SortOrder
+    interviewerId?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    isBooked?: SortOrder
+    _count?: SlotCountOrderByAggregateInput
+    _max?: SlotMaxOrderByAggregateInput
+    _min?: SlotMinOrderByAggregateInput
+  }
+
+  export type SlotScalarWhereWithAggregatesInput = {
+    AND?: SlotScalarWhereWithAggregatesInput | SlotScalarWhereWithAggregatesInput[]
+    OR?: SlotScalarWhereWithAggregatesInput[]
+    NOT?: SlotScalarWhereWithAggregatesInput | SlotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Slot"> | string
+    interviewerId?: StringWithAggregatesFilter<"Slot"> | string
+    startTime?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
+    endTime?: DateTimeWithAggregatesFilter<"Slot"> | Date | string
+    isBooked?: BoolWithAggregatesFilter<"Slot"> | boolean
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -8678,7 +8707,8 @@ export namespace Prisma {
 
   export type InterviewCreateInput = {
     id?: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -8693,7 +8723,8 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -8704,7 +8735,8 @@ export namespace Prisma {
 
   export type InterviewUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8719,7 +8751,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8732,7 +8765,8 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -8741,7 +8775,8 @@ export namespace Prisma {
 
   export type InterviewUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -8752,66 +8787,12 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SlotCreateInput = {
-    id?: string
-    startTime: Date | string
-    endTime: Date | string
-    isBooked?: boolean
-    interviewer: UserCreateNestedOneWithoutSlotsInput
-  }
-
-  export type SlotUncheckedCreateInput = {
-    id?: string
-    interviewerId: string
-    startTime: Date | string
-    endTime: Date | string
-    isBooked?: boolean
-  }
-
-  export type SlotUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    isBooked?: BoolFieldUpdateOperationsInput | boolean
-    interviewer?: UserUpdateOneRequiredWithoutSlotsNestedInput
-  }
-
-  export type SlotUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    interviewerId?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    isBooked?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type SlotCreateManyInput = {
-    id?: string
-    interviewerId: string
-    startTime: Date | string
-    endTime: Date | string
-    isBooked?: boolean
-  }
-
-  export type SlotUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    isBooked?: BoolFieldUpdateOperationsInput | boolean
-  }
-
-  export type SlotUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    interviewerId?: StringFieldUpdateOperationsInput | string
-    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
-    isBooked?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type RoomCreateInput = {
@@ -8955,6 +8936,61 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SlotCreateInput = {
+    id?: string
+    startTime: Date | string
+    endTime: Date | string
+    isBooked?: boolean
+    interviewer: UserCreateNestedOneWithoutSlotsInput
+  }
+
+  export type SlotUncheckedCreateInput = {
+    id?: string
+    interviewerId: string
+    startTime: Date | string
+    endTime: Date | string
+    isBooked?: boolean
+  }
+
+  export type SlotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooked?: BoolFieldUpdateOperationsInput | boolean
+    interviewer?: UserUpdateOneRequiredWithoutSlotsNestedInput
+  }
+
+  export type SlotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    interviewerId?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooked?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SlotCreateManyInput = {
+    id?: string
+    interviewerId: string
+    startTime: Date | string
+    endTime: Date | string
+    isBooked?: boolean
+  }
+
+  export type SlotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooked?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SlotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    interviewerId?: StringFieldUpdateOperationsInput | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    isBooked?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -9106,6 +9142,20 @@ export namespace Prisma {
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
+  export type JsonNullableListFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableListFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableListFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableListFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableListFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableListFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel> | null
+    has?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    hasEvery?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel>
+    hasSome?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
 
   export type EnumInterviewStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.InterviewStatus | EnumInterviewStatusFieldRefInput<$PrismaModel>
@@ -9138,7 +9188,8 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
-    candidateCode?: SortOrder
+    audioUrl?: SortOrder
+    codeHistory?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -9149,7 +9200,7 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
-    candidateCode?: SortOrder
+    audioUrl?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -9160,7 +9211,7 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
-    candidateCode?: SortOrder
+    audioUrl?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
@@ -9193,43 +9244,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumInterviewStatusFilter<$PrismaModel>
     _max?: NestedEnumInterviewStatusFilter<$PrismaModel>
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type SlotCountOrderByAggregateInput = {
-    id?: SortOrder
-    interviewerId?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
-    isBooked?: SortOrder
-  }
-
-  export type SlotMaxOrderByAggregateInput = {
-    id?: SortOrder
-    interviewerId?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
-    isBooked?: SortOrder
-  }
-
-  export type SlotMinOrderByAggregateInput = {
-    id?: SortOrder
-    interviewerId?: SortOrder
-    startTime?: SortOrder
-    endTime?: SortOrder
-    isBooked?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type InterviewScalarRelationFilter = {
@@ -9333,6 +9347,43 @@ export namespace Prisma {
     id?: SortOrder
     candidateId?: SortOrder
     interviewerId?: SortOrder
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type SlotCountOrderByAggregateInput = {
+    id?: SortOrder
+    interviewerId?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    isBooked?: SortOrder
+  }
+
+  export type SlotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    interviewerId?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    isBooked?: SortOrder
+  }
+
+  export type SlotMinOrderByAggregateInput = {
+    id?: SortOrder
+    interviewerId?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    isBooked?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type InterviewCreateNestedManyWithoutCandidateInput = {
@@ -9557,6 +9608,10 @@ export namespace Prisma {
     deleteMany?: AssignmentScalarWhereInput | AssignmentScalarWhereInput[]
   }
 
+  export type InterviewCreatecodeHistoryInput = {
+    set: InputJsonValue[]
+  }
+
   export type UserCreateNestedOneWithoutInterviewsAsCandidateInput = {
     create?: XOR<UserCreateWithoutInterviewsAsCandidateInput, UserUncheckedCreateWithoutInterviewsAsCandidateInput>
     connectOrCreate?: UserCreateOrConnectWithoutInterviewsAsCandidateInput
@@ -9595,6 +9650,11 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type InterviewUpdatecodeHistoryInput = {
+    set?: InputJsonValue[]
+    push?: InputJsonValue | InputJsonValue[]
   }
 
   export type EnumInterviewStatusFieldUpdateOperationsInput = {
@@ -9655,24 +9715,6 @@ export namespace Prisma {
     delete?: EvaluationWhereInput | boolean
     connect?: EvaluationWhereUniqueInput
     update?: XOR<XOR<EvaluationUpdateToOneWithWhereWithoutInterviewInput, EvaluationUpdateWithoutInterviewInput>, EvaluationUncheckedUpdateWithoutInterviewInput>
-  }
-
-  export type UserCreateNestedOneWithoutSlotsInput = {
-    create?: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSlotsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type UserUpdateOneRequiredWithoutSlotsNestedInput = {
-    create?: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSlotsInput
-    upsert?: UserUpsertWithoutSlotsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSlotsInput, UserUpdateWithoutSlotsInput>, UserUncheckedUpdateWithoutSlotsInput>
   }
 
   export type InterviewCreateNestedOneWithoutRoomInput = {
@@ -9737,6 +9779,24 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAssignmentsAsInterviewerInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignmentsAsInterviewerInput, UserUpdateWithoutAssignmentsAsInterviewerInput>, UserUncheckedUpdateWithoutAssignmentsAsInterviewerInput>
+  }
+
+  export type UserCreateNestedOneWithoutSlotsInput = {
+    create?: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSlotsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type UserUpdateOneRequiredWithoutSlotsNestedInput = {
+    create?: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSlotsInput
+    upsert?: UserUpsertWithoutSlotsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSlotsInput, UserUpdateWithoutSlotsInput>, UserUncheckedUpdateWithoutSlotsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -9882,19 +9942,6 @@ export namespace Prisma {
     _max?: NestedEnumInterviewStatusFilter<$PrismaModel>
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -9922,9 +9969,23 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type InterviewCreateWithoutCandidateInput = {
     id?: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -9937,7 +9998,8 @@ export namespace Prisma {
   export type InterviewUncheckedCreateWithoutCandidateInput = {
     id?: string
     interviewerId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -9958,7 +10020,8 @@ export namespace Prisma {
 
   export type InterviewCreateWithoutInterviewerInput = {
     id?: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -9971,7 +10034,8 @@ export namespace Prisma {
   export type InterviewUncheckedCreateWithoutInterviewerInput = {
     id?: string
     candidateId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10077,7 +10141,8 @@ export namespace Prisma {
     id?: StringFilter<"Interview"> | string
     candidateId?: StringFilter<"Interview"> | string
     interviewerId?: StringFilter<"Interview"> | string
-    candidateCode?: StringNullableFilter<"Interview"> | string | null
+    audioUrl?: StringNullableFilter<"Interview"> | string | null
+    codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
     createdAt?: DateTimeFilter<"Interview"> | Date | string
@@ -10396,81 +10461,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserCreateWithoutSlotsInput = {
-    id?: string
-    name: string
-    email: string
-    role: $Enums.Role
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    interviewsAsCandidate?: InterviewCreateNestedManyWithoutCandidateInput
-    interviewsAsInterviewer?: InterviewCreateNestedManyWithoutInterviewerInput
-    assignmentsAsCandidate?: AssignmentCreateNestedManyWithoutCandidateInput
-    assignmentsAsInterviewer?: AssignmentCreateNestedManyWithoutInterviewerInput
-  }
-
-  export type UserUncheckedCreateWithoutSlotsInput = {
-    id?: string
-    name: string
-    email: string
-    role: $Enums.Role
-    password: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    interviewsAsCandidate?: InterviewUncheckedCreateNestedManyWithoutCandidateInput
-    interviewsAsInterviewer?: InterviewUncheckedCreateNestedManyWithoutInterviewerInput
-    assignmentsAsCandidate?: AssignmentUncheckedCreateNestedManyWithoutCandidateInput
-    assignmentsAsInterviewer?: AssignmentUncheckedCreateNestedManyWithoutInterviewerInput
-  }
-
-  export type UserCreateOrConnectWithoutSlotsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
-  }
-
-  export type UserUpsertWithoutSlotsInput = {
-    update: XOR<UserUpdateWithoutSlotsInput, UserUncheckedUpdateWithoutSlotsInput>
-    create: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutSlotsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutSlotsInput, UserUncheckedUpdateWithoutSlotsInput>
-  }
-
-  export type UserUpdateWithoutSlotsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    interviewsAsCandidate?: InterviewUpdateManyWithoutCandidateNestedInput
-    interviewsAsInterviewer?: InterviewUpdateManyWithoutInterviewerNestedInput
-    assignmentsAsCandidate?: AssignmentUpdateManyWithoutCandidateNestedInput
-    assignmentsAsInterviewer?: AssignmentUpdateManyWithoutInterviewerNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutSlotsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    password?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    interviewsAsCandidate?: InterviewUncheckedUpdateManyWithoutCandidateNestedInput
-    interviewsAsInterviewer?: InterviewUncheckedUpdateManyWithoutInterviewerNestedInput
-    assignmentsAsCandidate?: AssignmentUncheckedUpdateManyWithoutCandidateNestedInput
-    assignmentsAsInterviewer?: AssignmentUncheckedUpdateManyWithoutInterviewerNestedInput
-  }
-
   export type InterviewCreateWithoutRoomInput = {
     id?: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10484,7 +10478,8 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10510,7 +10505,8 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutRoomInput = {
     id?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10524,7 +10520,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10534,7 +10531,8 @@ export namespace Prisma {
 
   export type InterviewCreateWithoutEvaluationInput = {
     id?: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10548,7 +10546,8 @@ export namespace Prisma {
     id?: string
     candidateId: string
     interviewerId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10574,7 +10573,8 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutEvaluationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10588,7 +10588,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10740,10 +10741,83 @@ export namespace Prisma {
     assignmentsAsCandidate?: AssignmentUncheckedUpdateManyWithoutCandidateNestedInput
   }
 
+  export type UserCreateWithoutSlotsInput = {
+    id?: string
+    name: string
+    email: string
+    role: $Enums.Role
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    interviewsAsCandidate?: InterviewCreateNestedManyWithoutCandidateInput
+    interviewsAsInterviewer?: InterviewCreateNestedManyWithoutInterviewerInput
+    assignmentsAsCandidate?: AssignmentCreateNestedManyWithoutCandidateInput
+    assignmentsAsInterviewer?: AssignmentCreateNestedManyWithoutInterviewerInput
+  }
+
+  export type UserUncheckedCreateWithoutSlotsInput = {
+    id?: string
+    name: string
+    email: string
+    role: $Enums.Role
+    password: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    interviewsAsCandidate?: InterviewUncheckedCreateNestedManyWithoutCandidateInput
+    interviewsAsInterviewer?: InterviewUncheckedCreateNestedManyWithoutInterviewerInput
+    assignmentsAsCandidate?: AssignmentUncheckedCreateNestedManyWithoutCandidateInput
+    assignmentsAsInterviewer?: AssignmentUncheckedCreateNestedManyWithoutInterviewerInput
+  }
+
+  export type UserCreateOrConnectWithoutSlotsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
+  }
+
+  export type UserUpsertWithoutSlotsInput = {
+    update: XOR<UserUpdateWithoutSlotsInput, UserUncheckedUpdateWithoutSlotsInput>
+    create: XOR<UserCreateWithoutSlotsInput, UserUncheckedCreateWithoutSlotsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSlotsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSlotsInput, UserUncheckedUpdateWithoutSlotsInput>
+  }
+
+  export type UserUpdateWithoutSlotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    interviewsAsCandidate?: InterviewUpdateManyWithoutCandidateNestedInput
+    interviewsAsInterviewer?: InterviewUpdateManyWithoutInterviewerNestedInput
+    assignmentsAsCandidate?: AssignmentUpdateManyWithoutCandidateNestedInput
+    assignmentsAsInterviewer?: AssignmentUpdateManyWithoutInterviewerNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSlotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    password?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    interviewsAsCandidate?: InterviewUncheckedUpdateManyWithoutCandidateNestedInput
+    interviewsAsInterviewer?: InterviewUncheckedUpdateManyWithoutInterviewerNestedInput
+    assignmentsAsCandidate?: AssignmentUncheckedUpdateManyWithoutCandidateNestedInput
+    assignmentsAsInterviewer?: AssignmentUncheckedUpdateManyWithoutInterviewerNestedInput
+  }
+
   export type InterviewCreateManyCandidateInput = {
     id?: string
     interviewerId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10753,7 +10827,8 @@ export namespace Prisma {
   export type InterviewCreateManyInterviewerInput = {
     id?: string
     candidateId: string
-    candidateCode?: string | null
+    audioUrl?: string | null
+    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
     createdAt?: Date | string
@@ -10779,7 +10854,8 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutCandidateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10792,7 +10868,8 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateWithoutCandidateInput = {
     id?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10804,7 +10881,8 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateManyWithoutCandidateInput = {
     id?: StringFieldUpdateOperationsInput | string
     interviewerId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10813,7 +10891,8 @@ export namespace Prisma {
 
   export type InterviewUpdateWithoutInterviewerInput = {
     id?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10826,7 +10905,8 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateWithoutInterviewerInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10838,7 +10918,8 @@ export namespace Prisma {
   export type InterviewUncheckedUpdateManyWithoutInterviewerInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidateId?: StringFieldUpdateOperationsInput | string
-    candidateCode?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

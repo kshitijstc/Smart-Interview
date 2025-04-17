@@ -38,7 +38,7 @@ export default function Topbar({ name }) {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="flex items-center space-x-1 hover:bg-gray-100 px-3 py-1 rounded transition"
+          className="flex items-center space-x-1 hover:bg-gray-100 px-3 py-1 rounded transition cursor-pointer"
         >
           <UserCircle2 className="w-6 h-6 text-gray-600" />
           <ChevronDown className="w-4 h-4 text-gray-600" />
@@ -47,7 +47,7 @@ export default function Topbar({ name }) {
           <div className="absolute right-0 mt-2 bg-white border rounded shadow-lg w-36 z-20 animate-fadeIn">
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+              className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition cursor-pointer"
             >
               Logout
             </button>
