@@ -107,6 +107,12 @@ export default function CandidateDashboard() {
                     Status: {i.status}
                   </p>
                 </div>
+                <a
+                  href={`/dashboard/interviewer/evaluation/${i.room.link}`}
+                  className="mt-4 md:mt-0 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                >
+                  View Evaluation
+                </a>
                 {i.evaluation && (
                   <details className="mt-3 md:mt-0 bg-gray-100 p-3 rounded w-full md:w-1/2">
                     <summary className="cursor-pointer text-sm font-semibold mb-2">

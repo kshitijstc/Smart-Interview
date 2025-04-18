@@ -9,10 +9,10 @@ export default function Sidebar({ role }) {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
   const closeSidebar = () => setIsOpen(false);
-  const links =
-    role === "INTERVIEWER"
-      ? [{ name: "Dashboard", path: "/dashboard/interviewer" }]
-      : [{ name: "Dashboard", path: "/dashboard/candidate" }];
+  // const links =
+  //   role === "INTERVIEWER"
+  //     ? [{ name: "Dashboard", path: "/dashboard/interviewer" }]
+  //     : [{ name: "Dashboard", path: "/dashboard/candidate" }];
 
   return (
     <>

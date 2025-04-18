@@ -17,9 +17,11 @@ export default function JoinInterview() {
   const [jwtToken, setJwtToken] = useState(null);
   const [language, setLanguage] = useState("cpp");
   const [code, setCode] = useState("// Start coding here...");
+  const [rightWidth, setRightWidth] = useState("35%");
   const mediaRecorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
   const editorRef = useRef(null);
+  const dividerRef = useRef(null);
 
   const token = typeof window !== "undefined" ? localStorage.getItem("token") : "";
 
@@ -114,6 +116,27 @@ export default function JoinInterview() {
     }
   };
 
+  // const handleMouseDown = (e) => {
+  //   document.addEventListener("mousemove", handleMouseMove);
+  //   document.addEventListener("mouseup", handleMouseUp);
+  // };
+
+  // const handleMouseMove = (e) => {
+  //   const container = document.querySelector(".split-container");
+  //   if (!container) return;
+
+  //   const containerWidth = container.offsetWidth;
+  //   const newRightWidth = ((containerWidth - e.clientX) / containerWidth) * 100; 
+  //   if (newRightWidth > 20 && newRightWidth < 80) { 
+  //     setRightWidth(`${newRightWidth}%`);
+  //   }
+  // };
+
+  // const handleMouseUp = () => {
+  //   document.removeEventListener("mousemove", handleMouseMove);
+  //   document.removeEventListener("mouseup", handleMouseUp);
+  // };
+
   if (!id || !jwtToken) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -161,7 +184,7 @@ export default function JoinInterview() {
       </header>
 
       <div className="flex flex-1 overflow-hidden">
-        <div className="w-2/3 h-full border-r">
+        <div className="w-3/5 h-full border-r">
           <JaaSMeeting
             appId="vpaas-magic-cookie-0d902d80a4824b22bc588f40f4dd5929"
             domain="8x8.vc"
@@ -202,7 +225,7 @@ export default function JoinInterview() {
           />
         </div>
 
-        <div className="w-1/3 h-full overflow-auto">
+        <div className="w-2/5 h-full overflow-auto">
           <Suspense fallback={<div className="h-full flex items-center justify-center">Loading Editor...</div>}>
             <Editor
               height="100%"
@@ -220,6 +243,77 @@ export default function JoinInterview() {
           </Suspense>
         </div>
       </div>
+      {/* <div className="split-container flex flex-1 overflow-hidden">
+        <div
+          className="h-full border-r"
+          style={{ width: `calc(100% - ${rightWidth})`, minWidth: "20%", maxWidth: "80%" }}
+        >
+          <JaaSMeeting
+            appId="vpaas-magic-cookie-0d902d80a4824b22bc588f40f4dd5929"
+            domain="8x8.vc"
+            roomName={id}
+            jwt={jwtToken}
+            configOverwrite={{
+              prejoinPageEnabled: true,
+              startWithAudioMuted: true,
+              startScreenSharing: false,
+              enableEmailInStats: false,
+            }}
+            interfaceConfigOverwrite={{
+              DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+            }}
+            getIFrameRef={(iframeRef) => {
+              iframeRef.style.height = "100%";
+              iframeRef.style.width = "100%";
+              iframeRef.style.border = "0";
+              iframeRef.style.background = "#000";
+              iframeRef.allow = "camera; microphone; display-capture";
+            }}
+            onApiReady={(externalApi) => {
+              console.log("JaaS API Ready");
+              externalApi.addListener("readyToClose", async () => {
+                alert("Interview ended");
+                try {
+                  await axios.patch(
+                    `http://localhost:5000/api/interviews/room/${id}/status`,
+                    { status: "COMPLETED" },
+                    { headers: { Authorization: `Bearer ${token}` } }
+                  );
+                  console.log("Status updated to COMPLETED");
+                } catch (err) {
+                  console.error("Status update failed:", err);
+                }
+              });
+            }}
+          />
+        </div>
+
+        <div
+          ref={dividerRef}
+          className="w-1.5 bg-gray-400 cursor-col-resize"
+          onMouseDown={handleMouseDown}
+          style={{ height: "100%" }}
+        ></div>
+
+        <div className="w-full h-full overflow-auto" 
+        style={{ width: rightWidth, minWidth: "20%", maxWidth: "80%" }}>
+          <Suspense fallback={<div className="h-full flex items-center justify-center">Loading Editor...</div>}>
+            <Editor
+              height="100%"
+              defaultLanguage={language}
+              value={code}
+              onChange={handleEditorChange}
+              onMount={handleEditorDidMount}
+              theme="vs-dark"
+              options={{
+                fontSize: 14,
+                minimap: { enabled: false },
+                automaticLayout: true,
+              }}
+            />
+          </Suspense>
+        </div>
+      </div> */}
 
       
     </div>

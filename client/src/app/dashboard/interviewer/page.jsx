@@ -168,6 +168,12 @@ export default function InterviewerDashboard() {
                     Status: {i.status}
                   </p>
                 </div>
+                <a
+                  href={`/dashboard/interviewer/evaluation/${i.room.link}`}
+                  className="mt-4 md:mt-0 bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700"
+                >
+                  View Evaluation
+                </a>
               </div>
             ))}
           </div>
