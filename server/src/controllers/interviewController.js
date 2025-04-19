@@ -17,7 +17,6 @@ export const getMyInterviews = async (req, res) => {
             email: true,
           },
         },
-        evaluation: true,
         room: true ,
       },
       orderBy: {
@@ -45,7 +44,6 @@ export const getMyInterviewerInterviews = async (req, res) => {
             email: true,
           },
         },
-        evaluation: true,
         room: true ,
       },
       orderBy: {

@@ -31,7 +31,7 @@ export const login= async (req,res)=>{
             },
             // secret key
             process.env.JWT_SECRET,
-            {expiresIn:"7d"}
+            {expiresIn:"1d"}
         )
         return res.status(200).json({message:"Login successful",token,user});
     }catch(err){
@@ -70,7 +70,7 @@ export const signup= async (req,res)=>{
               role: user.role,
             },
             process.env.JWT_SECRET,
-            { expiresIn: "7d" }
+            { expiresIn: "1d" }
           );
           
           return res.status(201).json({ message: "User created successfully", token, user });

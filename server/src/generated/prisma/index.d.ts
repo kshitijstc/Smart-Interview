@@ -29,11 +29,6 @@ export type Interview = $Result.DefaultSelection<Prisma.$InterviewPayload>
  */
 export type Room = $Result.DefaultSelection<Prisma.$RoomPayload>
 /**
- * Model Evaluation
- * 
- */
-export type Evaluation = $Result.DefaultSelection<Prisma.$EvaluationPayload>
-/**
  * Model Assignment
  * 
  */
@@ -229,16 +224,6 @@ export class PrismaClient<
     * ```
     */
   get room(): Prisma.RoomDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.evaluation`: Exposes CRUD operations for the **Evaluation** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Evaluations
-    * const evaluations = await prisma.evaluation.findMany()
-    * ```
-    */
-  get evaluation(): Prisma.EvaluationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.assignment`: Exposes CRUD operations for the **Assignment** model.
@@ -702,7 +687,6 @@ export namespace Prisma {
     User: 'User',
     Interview: 'Interview',
     Room: 'Room',
-    Evaluation: 'Evaluation',
     Assignment: 'Assignment',
     Slot: 'Slot'
   };
@@ -723,7 +707,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "interview" | "room" | "evaluation" | "assignment" | "slot"
+      modelProps: "user" | "interview" | "room" | "assignment" | "slot"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -946,80 +930,6 @@ export namespace Prisma {
           count: {
             args: Prisma.RoomCountArgs<ExtArgs>
             result: $Utils.Optional<RoomCountAggregateOutputType> | number
-          }
-        }
-      }
-      Evaluation: {
-        payload: Prisma.$EvaluationPayload<ExtArgs>
-        fields: Prisma.EvaluationFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.EvaluationFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.EvaluationFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>
-          }
-          findFirst: {
-            args: Prisma.EvaluationFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.EvaluationFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>
-          }
-          findMany: {
-            args: Prisma.EvaluationFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>[]
-          }
-          create: {
-            args: Prisma.EvaluationCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>
-          }
-          createMany: {
-            args: Prisma.EvaluationCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.EvaluationCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>[]
-          }
-          delete: {
-            args: Prisma.EvaluationDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>
-          }
-          update: {
-            args: Prisma.EvaluationUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>
-          }
-          deleteMany: {
-            args: Prisma.EvaluationDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.EvaluationUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.EvaluationUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>[]
-          }
-          upsert: {
-            args: Prisma.EvaluationUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$EvaluationPayload>
-          }
-          aggregate: {
-            args: Prisma.EvaluationAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateEvaluation>
-          }
-          groupBy: {
-            args: Prisma.EvaluationGroupByArgs<ExtArgs>
-            result: $Utils.Optional<EvaluationGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.EvaluationCountArgs<ExtArgs>
-            result: $Utils.Optional<EvaluationCountAggregateOutputType> | number
           }
         }
       }
@@ -1258,7 +1168,6 @@ export namespace Prisma {
     user?: UserOmit
     interview?: InterviewOmit
     room?: RoomOmit
-    evaluation?: EvaluationOmit
     assignment?: AssignmentOmit
     slot?: SlotOmit
   }
@@ -2669,6 +2578,7 @@ export namespace Prisma {
     codeHistory: number
     scheduledAt: number
     status: number
+    evaluation: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2705,6 +2615,7 @@ export namespace Prisma {
     codeHistory?: true
     scheduledAt?: true
     status?: true
+    evaluation?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2790,6 +2701,7 @@ export namespace Prisma {
     codeHistory: JsonValue[]
     scheduledAt: Date
     status: $Enums.InterviewStatus
+    evaluation: JsonValue | null
     createdAt: Date
     updatedAt: Date
     _count: InterviewCountAggregateOutputType | null
@@ -2819,12 +2731,12 @@ export namespace Prisma {
     codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
+    evaluation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     candidate?: boolean | UserDefaultArgs<ExtArgs>
     interviewer?: boolean | UserDefaultArgs<ExtArgs>
     room?: boolean | Interview$roomArgs<ExtArgs>
-    evaluation?: boolean | Interview$evaluationArgs<ExtArgs>
   }, ExtArgs["result"]["interview"]>
 
   export type InterviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2835,6 +2747,7 @@ export namespace Prisma {
     codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
+    evaluation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     candidate?: boolean | UserDefaultArgs<ExtArgs>
@@ -2849,6 +2762,7 @@ export namespace Prisma {
     codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
+    evaluation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     candidate?: boolean | UserDefaultArgs<ExtArgs>
@@ -2863,16 +2777,16 @@ export namespace Prisma {
     codeHistory?: boolean
     scheduledAt?: boolean
     status?: boolean
+    evaluation?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type InterviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateId" | "interviewerId" | "audioUrl" | "codeHistory" | "scheduledAt" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["interview"]>
+  export type InterviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidateId" | "interviewerId" | "audioUrl" | "codeHistory" | "scheduledAt" | "status" | "evaluation" | "createdAt" | "updatedAt", ExtArgs["result"]["interview"]>
   export type InterviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidate?: boolean | UserDefaultArgs<ExtArgs>
     interviewer?: boolean | UserDefaultArgs<ExtArgs>
     room?: boolean | Interview$roomArgs<ExtArgs>
-    evaluation?: boolean | Interview$evaluationArgs<ExtArgs>
   }
   export type InterviewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidate?: boolean | UserDefaultArgs<ExtArgs>
@@ -2889,7 +2803,6 @@ export namespace Prisma {
       candidate: Prisma.$UserPayload<ExtArgs>
       interviewer: Prisma.$UserPayload<ExtArgs>
       room: Prisma.$RoomPayload<ExtArgs> | null
-      evaluation: Prisma.$EvaluationPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2899,6 +2812,7 @@ export namespace Prisma {
       codeHistory: Prisma.JsonValue[]
       scheduledAt: Date
       status: $Enums.InterviewStatus
+      evaluation: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["interview"]>
@@ -3298,7 +3212,6 @@ export namespace Prisma {
     candidate<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     interviewer<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     room<T extends Interview$roomArgs<ExtArgs> = {}>(args?: Subset<T, Interview$roomArgs<ExtArgs>>): Prisma__RoomClient<$Result.GetResult<Prisma.$RoomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    evaluation<T extends Interview$evaluationArgs<ExtArgs> = {}>(args?: Subset<T, Interview$evaluationArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3335,6 +3248,7 @@ export namespace Prisma {
     readonly codeHistory: FieldRef<"Interview", 'Json[]'>
     readonly scheduledAt: FieldRef<"Interview", 'DateTime'>
     readonly status: FieldRef<"Interview", 'InterviewStatus'>
+    readonly evaluation: FieldRef<"Interview", 'Json'>
     readonly createdAt: FieldRef<"Interview", 'DateTime'>
     readonly updatedAt: FieldRef<"Interview", 'DateTime'>
   }
@@ -3749,25 +3663,6 @@ export namespace Prisma {
      */
     include?: RoomInclude<ExtArgs> | null
     where?: RoomWhereInput
-  }
-
-  /**
-   * Interview.evaluation
-   */
-  export type Interview$evaluationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    where?: EvaluationWhereInput
   }
 
   /**
@@ -4831,1098 +4726,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: RoomInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model Evaluation
-   */
-
-  export type AggregateEvaluation = {
-    _count: EvaluationCountAggregateOutputType | null
-    _avg: EvaluationAvgAggregateOutputType | null
-    _sum: EvaluationSumAggregateOutputType | null
-    _min: EvaluationMinAggregateOutputType | null
-    _max: EvaluationMaxAggregateOutputType | null
-  }
-
-  export type EvaluationAvgAggregateOutputType = {
-    score: number | null
-  }
-
-  export type EvaluationSumAggregateOutputType = {
-    score: number | null
-  }
-
-  export type EvaluationMinAggregateOutputType = {
-    id: string | null
-    interviewId: string | null
-    score: number | null
-    remarks: string | null
-    createdAt: Date | null
-  }
-
-  export type EvaluationMaxAggregateOutputType = {
-    id: string | null
-    interviewId: string | null
-    score: number | null
-    remarks: string | null
-    createdAt: Date | null
-  }
-
-  export type EvaluationCountAggregateOutputType = {
-    id: number
-    interviewId: number
-    score: number
-    remarks: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type EvaluationAvgAggregateInputType = {
-    score?: true
-  }
-
-  export type EvaluationSumAggregateInputType = {
-    score?: true
-  }
-
-  export type EvaluationMinAggregateInputType = {
-    id?: true
-    interviewId?: true
-    score?: true
-    remarks?: true
-    createdAt?: true
-  }
-
-  export type EvaluationMaxAggregateInputType = {
-    id?: true
-    interviewId?: true
-    score?: true
-    remarks?: true
-    createdAt?: true
-  }
-
-  export type EvaluationCountAggregateInputType = {
-    id?: true
-    interviewId?: true
-    score?: true
-    remarks?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type EvaluationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Evaluation to aggregate.
-     */
-    where?: EvaluationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Evaluations to fetch.
-     */
-    orderBy?: EvaluationOrderByWithRelationInput | EvaluationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: EvaluationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Evaluations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Evaluations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Evaluations
-    **/
-    _count?: true | EvaluationCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: EvaluationAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: EvaluationSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: EvaluationMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: EvaluationMaxAggregateInputType
-  }
-
-  export type GetEvaluationAggregateType<T extends EvaluationAggregateArgs> = {
-        [P in keyof T & keyof AggregateEvaluation]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateEvaluation[P]>
-      : GetScalarType<T[P], AggregateEvaluation[P]>
-  }
-
-
-
-
-  export type EvaluationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EvaluationWhereInput
-    orderBy?: EvaluationOrderByWithAggregationInput | EvaluationOrderByWithAggregationInput[]
-    by: EvaluationScalarFieldEnum[] | EvaluationScalarFieldEnum
-    having?: EvaluationScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: EvaluationCountAggregateInputType | true
-    _avg?: EvaluationAvgAggregateInputType
-    _sum?: EvaluationSumAggregateInputType
-    _min?: EvaluationMinAggregateInputType
-    _max?: EvaluationMaxAggregateInputType
-  }
-
-  export type EvaluationGroupByOutputType = {
-    id: string
-    interviewId: string
-    score: number
-    remarks: string
-    createdAt: Date
-    _count: EvaluationCountAggregateOutputType | null
-    _avg: EvaluationAvgAggregateOutputType | null
-    _sum: EvaluationSumAggregateOutputType | null
-    _min: EvaluationMinAggregateOutputType | null
-    _max: EvaluationMaxAggregateOutputType | null
-  }
-
-  type GetEvaluationGroupByPayload<T extends EvaluationGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<EvaluationGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof EvaluationGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], EvaluationGroupByOutputType[P]>
-            : GetScalarType<T[P], EvaluationGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type EvaluationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    interviewId?: boolean
-    score?: boolean
-    remarks?: boolean
-    createdAt?: boolean
-    interview?: boolean | InterviewDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["evaluation"]>
-
-  export type EvaluationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    interviewId?: boolean
-    score?: boolean
-    remarks?: boolean
-    createdAt?: boolean
-    interview?: boolean | InterviewDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["evaluation"]>
-
-  export type EvaluationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    interviewId?: boolean
-    score?: boolean
-    remarks?: boolean
-    createdAt?: boolean
-    interview?: boolean | InterviewDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["evaluation"]>
-
-  export type EvaluationSelectScalar = {
-    id?: boolean
-    interviewId?: boolean
-    score?: boolean
-    remarks?: boolean
-    createdAt?: boolean
-  }
-
-  export type EvaluationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "interviewId" | "score" | "remarks" | "createdAt", ExtArgs["result"]["evaluation"]>
-  export type EvaluationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    interview?: boolean | InterviewDefaultArgs<ExtArgs>
-  }
-  export type EvaluationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    interview?: boolean | InterviewDefaultArgs<ExtArgs>
-  }
-  export type EvaluationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    interview?: boolean | InterviewDefaultArgs<ExtArgs>
-  }
-
-  export type $EvaluationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Evaluation"
-    objects: {
-      interview: Prisma.$InterviewPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      interviewId: string
-      score: number
-      remarks: string
-      createdAt: Date
-    }, ExtArgs["result"]["evaluation"]>
-    composites: {}
-  }
-
-  type EvaluationGetPayload<S extends boolean | null | undefined | EvaluationDefaultArgs> = $Result.GetResult<Prisma.$EvaluationPayload, S>
-
-  type EvaluationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<EvaluationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: EvaluationCountAggregateInputType | true
-    }
-
-  export interface EvaluationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Evaluation'], meta: { name: 'Evaluation' } }
-    /**
-     * Find zero or one Evaluation that matches the filter.
-     * @param {EvaluationFindUniqueArgs} args - Arguments to find a Evaluation
-     * @example
-     * // Get one Evaluation
-     * const evaluation = await prisma.evaluation.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends EvaluationFindUniqueArgs>(args: SelectSubset<T, EvaluationFindUniqueArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Evaluation that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {EvaluationFindUniqueOrThrowArgs} args - Arguments to find a Evaluation
-     * @example
-     * // Get one Evaluation
-     * const evaluation = await prisma.evaluation.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends EvaluationFindUniqueOrThrowArgs>(args: SelectSubset<T, EvaluationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Evaluation that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EvaluationFindFirstArgs} args - Arguments to find a Evaluation
-     * @example
-     * // Get one Evaluation
-     * const evaluation = await prisma.evaluation.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends EvaluationFindFirstArgs>(args?: SelectSubset<T, EvaluationFindFirstArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Evaluation that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EvaluationFindFirstOrThrowArgs} args - Arguments to find a Evaluation
-     * @example
-     * // Get one Evaluation
-     * const evaluation = await prisma.evaluation.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends EvaluationFindFirstOrThrowArgs>(args?: SelectSubset<T, EvaluationFindFirstOrThrowArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Evaluations that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EvaluationFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Evaluations
-     * const evaluations = await prisma.evaluation.findMany()
-     * 
-     * // Get first 10 Evaluations
-     * const evaluations = await prisma.evaluation.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const evaluationWithIdOnly = await prisma.evaluation.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends EvaluationFindManyArgs>(args?: SelectSubset<T, EvaluationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Evaluation.
-     * @param {EvaluationCreateArgs} args - Arguments to create a Evaluation.
-     * @example
-     * // Create one Evaluation
-     * const Evaluation = await prisma.evaluation.create({
-     *   data: {
-     *     // ... data to create a Evaluation
-     *   }
-     * })
-     * 
-     */
-    create<T extends EvaluationCreateArgs>(args: SelectSubset<T, EvaluationCreateArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Evaluations.
-     * @param {EvaluationCreateManyArgs} args - Arguments to create many Evaluations.
-     * @example
-     * // Create many Evaluations
-     * const evaluation = await prisma.evaluation.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends EvaluationCreateManyArgs>(args?: SelectSubset<T, EvaluationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Evaluations and returns the data saved in the database.
-     * @param {EvaluationCreateManyAndReturnArgs} args - Arguments to create many Evaluations.
-     * @example
-     * // Create many Evaluations
-     * const evaluation = await prisma.evaluation.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Evaluations and only return the `id`
-     * const evaluationWithIdOnly = await prisma.evaluation.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends EvaluationCreateManyAndReturnArgs>(args?: SelectSubset<T, EvaluationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Evaluation.
-     * @param {EvaluationDeleteArgs} args - Arguments to delete one Evaluation.
-     * @example
-     * // Delete one Evaluation
-     * const Evaluation = await prisma.evaluation.delete({
-     *   where: {
-     *     // ... filter to delete one Evaluation
-     *   }
-     * })
-     * 
-     */
-    delete<T extends EvaluationDeleteArgs>(args: SelectSubset<T, EvaluationDeleteArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Evaluation.
-     * @param {EvaluationUpdateArgs} args - Arguments to update one Evaluation.
-     * @example
-     * // Update one Evaluation
-     * const evaluation = await prisma.evaluation.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends EvaluationUpdateArgs>(args: SelectSubset<T, EvaluationUpdateArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Evaluations.
-     * @param {EvaluationDeleteManyArgs} args - Arguments to filter Evaluations to delete.
-     * @example
-     * // Delete a few Evaluations
-     * const { count } = await prisma.evaluation.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends EvaluationDeleteManyArgs>(args?: SelectSubset<T, EvaluationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Evaluations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EvaluationUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Evaluations
-     * const evaluation = await prisma.evaluation.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends EvaluationUpdateManyArgs>(args: SelectSubset<T, EvaluationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Evaluations and returns the data updated in the database.
-     * @param {EvaluationUpdateManyAndReturnArgs} args - Arguments to update many Evaluations.
-     * @example
-     * // Update many Evaluations
-     * const evaluation = await prisma.evaluation.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Evaluations and only return the `id`
-     * const evaluationWithIdOnly = await prisma.evaluation.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends EvaluationUpdateManyAndReturnArgs>(args: SelectSubset<T, EvaluationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Evaluation.
-     * @param {EvaluationUpsertArgs} args - Arguments to update or create a Evaluation.
-     * @example
-     * // Update or create a Evaluation
-     * const evaluation = await prisma.evaluation.upsert({
-     *   create: {
-     *     // ... data to create a Evaluation
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Evaluation we want to update
-     *   }
-     * })
-     */
-    upsert<T extends EvaluationUpsertArgs>(args: SelectSubset<T, EvaluationUpsertArgs<ExtArgs>>): Prisma__EvaluationClient<$Result.GetResult<Prisma.$EvaluationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Evaluations.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EvaluationCountArgs} args - Arguments to filter Evaluations to count.
-     * @example
-     * // Count the number of Evaluations
-     * const count = await prisma.evaluation.count({
-     *   where: {
-     *     // ... the filter for the Evaluations we want to count
-     *   }
-     * })
-    **/
-    count<T extends EvaluationCountArgs>(
-      args?: Subset<T, EvaluationCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], EvaluationCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Evaluation.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EvaluationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends EvaluationAggregateArgs>(args: Subset<T, EvaluationAggregateArgs>): Prisma.PrismaPromise<GetEvaluationAggregateType<T>>
-
-    /**
-     * Group by Evaluation.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {EvaluationGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends EvaluationGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: EvaluationGroupByArgs['orderBy'] }
-        : { orderBy?: EvaluationGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, EvaluationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEvaluationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Evaluation model
-   */
-  readonly fields: EvaluationFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Evaluation.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__EvaluationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    interview<T extends InterviewDefaultArgs<ExtArgs> = {}>(args?: Subset<T, InterviewDefaultArgs<ExtArgs>>): Prisma__InterviewClient<$Result.GetResult<Prisma.$InterviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Evaluation model
-   */
-  interface EvaluationFieldRefs {
-    readonly id: FieldRef<"Evaluation", 'String'>
-    readonly interviewId: FieldRef<"Evaluation", 'String'>
-    readonly score: FieldRef<"Evaluation", 'Int'>
-    readonly remarks: FieldRef<"Evaluation", 'String'>
-    readonly createdAt: FieldRef<"Evaluation", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Evaluation findUnique
-   */
-  export type EvaluationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * Filter, which Evaluation to fetch.
-     */
-    where: EvaluationWhereUniqueInput
-  }
-
-  /**
-   * Evaluation findUniqueOrThrow
-   */
-  export type EvaluationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * Filter, which Evaluation to fetch.
-     */
-    where: EvaluationWhereUniqueInput
-  }
-
-  /**
-   * Evaluation findFirst
-   */
-  export type EvaluationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * Filter, which Evaluation to fetch.
-     */
-    where?: EvaluationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Evaluations to fetch.
-     */
-    orderBy?: EvaluationOrderByWithRelationInput | EvaluationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Evaluations.
-     */
-    cursor?: EvaluationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Evaluations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Evaluations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Evaluations.
-     */
-    distinct?: EvaluationScalarFieldEnum | EvaluationScalarFieldEnum[]
-  }
-
-  /**
-   * Evaluation findFirstOrThrow
-   */
-  export type EvaluationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * Filter, which Evaluation to fetch.
-     */
-    where?: EvaluationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Evaluations to fetch.
-     */
-    orderBy?: EvaluationOrderByWithRelationInput | EvaluationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Evaluations.
-     */
-    cursor?: EvaluationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Evaluations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Evaluations.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Evaluations.
-     */
-    distinct?: EvaluationScalarFieldEnum | EvaluationScalarFieldEnum[]
-  }
-
-  /**
-   * Evaluation findMany
-   */
-  export type EvaluationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * Filter, which Evaluations to fetch.
-     */
-    where?: EvaluationWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Evaluations to fetch.
-     */
-    orderBy?: EvaluationOrderByWithRelationInput | EvaluationOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Evaluations.
-     */
-    cursor?: EvaluationWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Evaluations from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Evaluations.
-     */
-    skip?: number
-    distinct?: EvaluationScalarFieldEnum | EvaluationScalarFieldEnum[]
-  }
-
-  /**
-   * Evaluation create
-   */
-  export type EvaluationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Evaluation.
-     */
-    data: XOR<EvaluationCreateInput, EvaluationUncheckedCreateInput>
-  }
-
-  /**
-   * Evaluation createMany
-   */
-  export type EvaluationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Evaluations.
-     */
-    data: EvaluationCreateManyInput | EvaluationCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Evaluation createManyAndReturn
-   */
-  export type EvaluationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * The data used to create many Evaluations.
-     */
-    data: EvaluationCreateManyInput | EvaluationCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Evaluation update
-   */
-  export type EvaluationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Evaluation.
-     */
-    data: XOR<EvaluationUpdateInput, EvaluationUncheckedUpdateInput>
-    /**
-     * Choose, which Evaluation to update.
-     */
-    where: EvaluationWhereUniqueInput
-  }
-
-  /**
-   * Evaluation updateMany
-   */
-  export type EvaluationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Evaluations.
-     */
-    data: XOR<EvaluationUpdateManyMutationInput, EvaluationUncheckedUpdateManyInput>
-    /**
-     * Filter which Evaluations to update
-     */
-    where?: EvaluationWhereInput
-    /**
-     * Limit how many Evaluations to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Evaluation updateManyAndReturn
-   */
-  export type EvaluationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * The data used to update Evaluations.
-     */
-    data: XOR<EvaluationUpdateManyMutationInput, EvaluationUncheckedUpdateManyInput>
-    /**
-     * Filter which Evaluations to update
-     */
-    where?: EvaluationWhereInput
-    /**
-     * Limit how many Evaluations to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Evaluation upsert
-   */
-  export type EvaluationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Evaluation to update in case it exists.
-     */
-    where: EvaluationWhereUniqueInput
-    /**
-     * In case the Evaluation found by the `where` argument doesn't exist, create a new Evaluation with this data.
-     */
-    create: XOR<EvaluationCreateInput, EvaluationUncheckedCreateInput>
-    /**
-     * In case the Evaluation was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<EvaluationUpdateInput, EvaluationUncheckedUpdateInput>
-  }
-
-  /**
-   * Evaluation delete
-   */
-  export type EvaluationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
-    /**
-     * Filter which Evaluation to delete.
-     */
-    where: EvaluationWhereUniqueInput
-  }
-
-  /**
-   * Evaluation deleteMany
-   */
-  export type EvaluationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Evaluations to delete
-     */
-    where?: EvaluationWhereInput
-    /**
-     * Limit how many Evaluations to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Evaluation without action
-   */
-  export type EvaluationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Evaluation
-     */
-    select?: EvaluationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Evaluation
-     */
-    omit?: EvaluationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: EvaluationInclude<ExtArgs> | null
   }
 
 
@@ -8059,6 +6862,7 @@ export namespace Prisma {
     codeHistory: 'codeHistory',
     scheduledAt: 'scheduledAt',
     status: 'status',
+    evaluation: 'evaluation',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8074,17 +6878,6 @@ export namespace Prisma {
   };
 
   export type RoomScalarFieldEnum = (typeof RoomScalarFieldEnum)[keyof typeof RoomScalarFieldEnum]
-
-
-  export const EvaluationScalarFieldEnum: {
-    id: 'id',
-    interviewId: 'interviewId',
-    score: 'score',
-    remarks: 'remarks',
-    createdAt: 'createdAt'
-  };
-
-  export type EvaluationScalarFieldEnum = (typeof EvaluationScalarFieldEnum)[keyof typeof EvaluationScalarFieldEnum]
 
 
   export const AssignmentScalarFieldEnum: {
@@ -8115,12 +6908,29 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   export const NullsOrder: {
@@ -8207,16 +7017,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
+   * Reference to a field of type 'QueryMode'
    */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -8228,16 +7031,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Int'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
   /**
-   * Reference to a field of type 'Float[]'
+   * Reference to a field of type 'Int[]'
    */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
   /**
    * Deep Input Types
@@ -8332,12 +7135,12 @@ export namespace Prisma {
     codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
+    evaluation?: JsonNullableFilter<"Interview">
     createdAt?: DateTimeFilter<"Interview"> | Date | string
     updatedAt?: DateTimeFilter<"Interview"> | Date | string
     candidate?: XOR<UserScalarRelationFilter, UserWhereInput>
     interviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
     room?: XOR<RoomNullableScalarRelationFilter, RoomWhereInput> | null
-    evaluation?: XOR<EvaluationNullableScalarRelationFilter, EvaluationWhereInput> | null
   }
 
   export type InterviewOrderByWithRelationInput = {
@@ -8348,12 +7151,12 @@ export namespace Prisma {
     codeHistory?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
+    evaluation?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     candidate?: UserOrderByWithRelationInput
     interviewer?: UserOrderByWithRelationInput
     room?: RoomOrderByWithRelationInput
-    evaluation?: EvaluationOrderByWithRelationInput
   }
 
   export type InterviewWhereUniqueInput = Prisma.AtLeast<{
@@ -8367,12 +7170,12 @@ export namespace Prisma {
     codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
+    evaluation?: JsonNullableFilter<"Interview">
     createdAt?: DateTimeFilter<"Interview"> | Date | string
     updatedAt?: DateTimeFilter<"Interview"> | Date | string
     candidate?: XOR<UserScalarRelationFilter, UserWhereInput>
     interviewer?: XOR<UserScalarRelationFilter, UserWhereInput>
     room?: XOR<RoomNullableScalarRelationFilter, RoomWhereInput> | null
-    evaluation?: XOR<EvaluationNullableScalarRelationFilter, EvaluationWhereInput> | null
   }, "id">
 
   export type InterviewOrderByWithAggregationInput = {
@@ -8383,6 +7186,7 @@ export namespace Prisma {
     codeHistory?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
+    evaluation?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: InterviewCountOrderByAggregateInput
@@ -8401,6 +7205,7 @@ export namespace Prisma {
     codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusWithAggregatesFilter<"Interview"> | $Enums.InterviewStatus
+    evaluation?: JsonNullableWithAggregatesFilter<"Interview">
     createdAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Interview"> | Date | string
   }
@@ -8453,63 +7258,6 @@ export namespace Prisma {
     roomName?: StringWithAggregatesFilter<"Room"> | string
     link?: StringWithAggregatesFilter<"Room"> | string
     interviewId?: StringWithAggregatesFilter<"Room"> | string
-  }
-
-  export type EvaluationWhereInput = {
-    AND?: EvaluationWhereInput | EvaluationWhereInput[]
-    OR?: EvaluationWhereInput[]
-    NOT?: EvaluationWhereInput | EvaluationWhereInput[]
-    id?: StringFilter<"Evaluation"> | string
-    interviewId?: StringFilter<"Evaluation"> | string
-    score?: IntFilter<"Evaluation"> | number
-    remarks?: StringFilter<"Evaluation"> | string
-    createdAt?: DateTimeFilter<"Evaluation"> | Date | string
-    interview?: XOR<InterviewScalarRelationFilter, InterviewWhereInput>
-  }
-
-  export type EvaluationOrderByWithRelationInput = {
-    id?: SortOrder
-    interviewId?: SortOrder
-    score?: SortOrder
-    remarks?: SortOrder
-    createdAt?: SortOrder
-    interview?: InterviewOrderByWithRelationInput
-  }
-
-  export type EvaluationWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    interviewId?: string
-    AND?: EvaluationWhereInput | EvaluationWhereInput[]
-    OR?: EvaluationWhereInput[]
-    NOT?: EvaluationWhereInput | EvaluationWhereInput[]
-    score?: IntFilter<"Evaluation"> | number
-    remarks?: StringFilter<"Evaluation"> | string
-    createdAt?: DateTimeFilter<"Evaluation"> | Date | string
-    interview?: XOR<InterviewScalarRelationFilter, InterviewWhereInput>
-  }, "id" | "interviewId">
-
-  export type EvaluationOrderByWithAggregationInput = {
-    id?: SortOrder
-    interviewId?: SortOrder
-    score?: SortOrder
-    remarks?: SortOrder
-    createdAt?: SortOrder
-    _count?: EvaluationCountOrderByAggregateInput
-    _avg?: EvaluationAvgOrderByAggregateInput
-    _max?: EvaluationMaxOrderByAggregateInput
-    _min?: EvaluationMinOrderByAggregateInput
-    _sum?: EvaluationSumOrderByAggregateInput
-  }
-
-  export type EvaluationScalarWhereWithAggregatesInput = {
-    AND?: EvaluationScalarWhereWithAggregatesInput | EvaluationScalarWhereWithAggregatesInput[]
-    OR?: EvaluationScalarWhereWithAggregatesInput[]
-    NOT?: EvaluationScalarWhereWithAggregatesInput | EvaluationScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Evaluation"> | string
-    interviewId?: StringWithAggregatesFilter<"Evaluation"> | string
-    score?: IntWithAggregatesFilter<"Evaluation"> | number
-    remarks?: StringWithAggregatesFilter<"Evaluation"> | string
-    createdAt?: DateTimeWithAggregatesFilter<"Evaluation"> | Date | string
   }
 
   export type AssignmentWhereInput = {
@@ -8711,12 +7459,12 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     candidate: UserCreateNestedOneWithoutInterviewsAsCandidateInput
     interviewer: UserCreateNestedOneWithoutInterviewsAsInterviewerInput
     room?: RoomCreateNestedOneWithoutInterviewInput
-    evaluation?: EvaluationCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewUncheckedCreateInput = {
@@ -8727,10 +7475,10 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     room?: RoomUncheckedCreateNestedOneWithoutInterviewInput
-    evaluation?: EvaluationUncheckedCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewUpdateInput = {
@@ -8739,12 +7487,12 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidate?: UserUpdateOneRequiredWithoutInterviewsAsCandidateNestedInput
     interviewer?: UserUpdateOneRequiredWithoutInterviewsAsInterviewerNestedInput
     room?: RoomUpdateOneWithoutInterviewNestedInput
-    evaluation?: EvaluationUpdateOneWithoutInterviewNestedInput
   }
 
   export type InterviewUncheckedUpdateInput = {
@@ -8755,10 +7503,10 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     room?: RoomUncheckedUpdateOneWithoutInterviewNestedInput
-    evaluation?: EvaluationUncheckedUpdateOneWithoutInterviewNestedInput
   }
 
   export type InterviewCreateManyInput = {
@@ -8769,6 +7517,7 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -8779,6 +7528,7 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8791,6 +7541,7 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -8841,61 +7592,6 @@ export namespace Prisma {
     roomName?: StringFieldUpdateOperationsInput | string
     link?: StringFieldUpdateOperationsInput | string
     interviewId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type EvaluationCreateInput = {
-    id?: string
-    score: number
-    remarks: string
-    createdAt?: Date | string
-    interview: InterviewCreateNestedOneWithoutEvaluationInput
-  }
-
-  export type EvaluationUncheckedCreateInput = {
-    id?: string
-    interviewId: string
-    score: number
-    remarks: string
-    createdAt?: Date | string
-  }
-
-  export type EvaluationUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    remarks?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    interview?: InterviewUpdateOneRequiredWithoutEvaluationNestedInput
-  }
-
-  export type EvaluationUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    interviewId?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    remarks?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EvaluationCreateManyInput = {
-    id?: string
-    interviewId: string
-    score: number
-    remarks: string
-    createdAt?: Date | string
-  }
-
-  export type EvaluationUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    remarks?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EvaluationUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    interviewId?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    remarks?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AssignmentCreateInput = {
@@ -9163,6 +7859,29 @@ export namespace Prisma {
     notIn?: $Enums.InterviewStatus[] | ListEnumInterviewStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumInterviewStatusFilter<$PrismaModel> | $Enums.InterviewStatus
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
@@ -9172,11 +7891,6 @@ export namespace Prisma {
   export type RoomNullableScalarRelationFilter = {
     is?: RoomWhereInput | null
     isNot?: RoomWhereInput | null
-  }
-
-  export type EvaluationNullableScalarRelationFilter = {
-    is?: EvaluationWhereInput | null
-    isNot?: EvaluationWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -9192,6 +7906,7 @@ export namespace Prisma {
     codeHistory?: SortOrder
     scheduledAt?: SortOrder
     status?: SortOrder
+    evaluation?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9245,6 +7960,32 @@ export namespace Prisma {
     _min?: NestedEnumInterviewStatusFilter<$PrismaModel>
     _max?: NestedEnumInterviewStatusFilter<$PrismaModel>
   }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
 
   export type InterviewScalarRelationFilter = {
     is?: InterviewWhereInput
@@ -9270,65 +8011,6 @@ export namespace Prisma {
     roomName?: SortOrder
     link?: SortOrder
     interviewId?: SortOrder
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type EvaluationCountOrderByAggregateInput = {
-    id?: SortOrder
-    interviewId?: SortOrder
-    score?: SortOrder
-    remarks?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type EvaluationAvgOrderByAggregateInput = {
-    score?: SortOrder
-  }
-
-  export type EvaluationMaxOrderByAggregateInput = {
-    id?: SortOrder
-    interviewId?: SortOrder
-    score?: SortOrder
-    remarks?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type EvaluationMinOrderByAggregateInput = {
-    id?: SortOrder
-    interviewId?: SortOrder
-    score?: SortOrder
-    remarks?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type EvaluationSumOrderByAggregateInput = {
-    score?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type AssignmentCountOrderByAggregateInput = {
@@ -9630,22 +8312,10 @@ export namespace Prisma {
     connect?: RoomWhereUniqueInput
   }
 
-  export type EvaluationCreateNestedOneWithoutInterviewInput = {
-    create?: XOR<EvaluationCreateWithoutInterviewInput, EvaluationUncheckedCreateWithoutInterviewInput>
-    connectOrCreate?: EvaluationCreateOrConnectWithoutInterviewInput
-    connect?: EvaluationWhereUniqueInput
-  }
-
   export type RoomUncheckedCreateNestedOneWithoutInterviewInput = {
     create?: XOR<RoomCreateWithoutInterviewInput, RoomUncheckedCreateWithoutInterviewInput>
     connectOrCreate?: RoomCreateOrConnectWithoutInterviewInput
     connect?: RoomWhereUniqueInput
-  }
-
-  export type EvaluationUncheckedCreateNestedOneWithoutInterviewInput = {
-    create?: XOR<EvaluationCreateWithoutInterviewInput, EvaluationUncheckedCreateWithoutInterviewInput>
-    connectOrCreate?: EvaluationCreateOrConnectWithoutInterviewInput
-    connect?: EvaluationWhereUniqueInput
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -9687,16 +8357,6 @@ export namespace Prisma {
     update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutInterviewInput, RoomUpdateWithoutInterviewInput>, RoomUncheckedUpdateWithoutInterviewInput>
   }
 
-  export type EvaluationUpdateOneWithoutInterviewNestedInput = {
-    create?: XOR<EvaluationCreateWithoutInterviewInput, EvaluationUncheckedCreateWithoutInterviewInput>
-    connectOrCreate?: EvaluationCreateOrConnectWithoutInterviewInput
-    upsert?: EvaluationUpsertWithoutInterviewInput
-    disconnect?: EvaluationWhereInput | boolean
-    delete?: EvaluationWhereInput | boolean
-    connect?: EvaluationWhereUniqueInput
-    update?: XOR<XOR<EvaluationUpdateToOneWithWhereWithoutInterviewInput, EvaluationUpdateWithoutInterviewInput>, EvaluationUncheckedUpdateWithoutInterviewInput>
-  }
-
   export type RoomUncheckedUpdateOneWithoutInterviewNestedInput = {
     create?: XOR<RoomCreateWithoutInterviewInput, RoomUncheckedCreateWithoutInterviewInput>
     connectOrCreate?: RoomCreateOrConnectWithoutInterviewInput
@@ -9705,16 +8365,6 @@ export namespace Prisma {
     delete?: RoomWhereInput | boolean
     connect?: RoomWhereUniqueInput
     update?: XOR<XOR<RoomUpdateToOneWithWhereWithoutInterviewInput, RoomUpdateWithoutInterviewInput>, RoomUncheckedUpdateWithoutInterviewInput>
-  }
-
-  export type EvaluationUncheckedUpdateOneWithoutInterviewNestedInput = {
-    create?: XOR<EvaluationCreateWithoutInterviewInput, EvaluationUncheckedCreateWithoutInterviewInput>
-    connectOrCreate?: EvaluationCreateOrConnectWithoutInterviewInput
-    upsert?: EvaluationUpsertWithoutInterviewInput
-    disconnect?: EvaluationWhereInput | boolean
-    delete?: EvaluationWhereInput | boolean
-    connect?: EvaluationWhereUniqueInput
-    update?: XOR<XOR<EvaluationUpdateToOneWithWhereWithoutInterviewInput, EvaluationUpdateWithoutInterviewInput>, EvaluationUncheckedUpdateWithoutInterviewInput>
   }
 
   export type InterviewCreateNestedOneWithoutRoomInput = {
@@ -9729,28 +8379,6 @@ export namespace Prisma {
     upsert?: InterviewUpsertWithoutRoomInput
     connect?: InterviewWhereUniqueInput
     update?: XOR<XOR<InterviewUpdateToOneWithWhereWithoutRoomInput, InterviewUpdateWithoutRoomInput>, InterviewUncheckedUpdateWithoutRoomInput>
-  }
-
-  export type InterviewCreateNestedOneWithoutEvaluationInput = {
-    create?: XOR<InterviewCreateWithoutEvaluationInput, InterviewUncheckedCreateWithoutEvaluationInput>
-    connectOrCreate?: InterviewCreateOrConnectWithoutEvaluationInput
-    connect?: InterviewWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type InterviewUpdateOneRequiredWithoutEvaluationNestedInput = {
-    create?: XOR<InterviewCreateWithoutEvaluationInput, InterviewUncheckedCreateWithoutEvaluationInput>
-    connectOrCreate?: InterviewCreateOrConnectWithoutEvaluationInput
-    upsert?: InterviewUpsertWithoutEvaluationInput
-    connect?: InterviewWhereUniqueInput
-    update?: XOR<XOR<InterviewUpdateToOneWithWhereWithoutEvaluationInput, InterviewUpdateWithoutEvaluationInput>, InterviewUncheckedUpdateWithoutEvaluationInput>
   }
 
   export type UserCreateNestedOneWithoutAssignmentsAsCandidateInput = {
@@ -9941,32 +8569,28 @@ export namespace Prisma {
     _min?: NestedEnumInterviewStatusFilter<$PrismaModel>
     _max?: NestedEnumInterviewStatusFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -9988,11 +8612,11 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     interviewer: UserCreateNestedOneWithoutInterviewsAsInterviewerInput
     room?: RoomCreateNestedOneWithoutInterviewInput
-    evaluation?: EvaluationCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewUncheckedCreateWithoutCandidateInput = {
@@ -10002,10 +8626,10 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     room?: RoomUncheckedCreateNestedOneWithoutInterviewInput
-    evaluation?: EvaluationUncheckedCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewCreateOrConnectWithoutCandidateInput = {
@@ -10024,11 +8648,11 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     candidate: UserCreateNestedOneWithoutInterviewsAsCandidateInput
     room?: RoomCreateNestedOneWithoutInterviewInput
-    evaluation?: EvaluationCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewUncheckedCreateWithoutInterviewerInput = {
@@ -10038,10 +8662,10 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     room?: RoomUncheckedCreateNestedOneWithoutInterviewInput
-    evaluation?: EvaluationUncheckedCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewCreateOrConnectWithoutInterviewerInput = {
@@ -10145,6 +8769,7 @@ export namespace Prisma {
     codeHistory?: JsonNullableListFilter<"Interview">
     scheduledAt?: DateTimeFilter<"Interview"> | Date | string
     status?: EnumInterviewStatusFilter<"Interview"> | $Enums.InterviewStatus
+    evaluation?: JsonNullableFilter<"Interview">
     createdAt?: DateTimeFilter<"Interview"> | Date | string
     updatedAt?: DateTimeFilter<"Interview"> | Date | string
   }
@@ -10316,25 +8941,6 @@ export namespace Prisma {
     create: XOR<RoomCreateWithoutInterviewInput, RoomUncheckedCreateWithoutInterviewInput>
   }
 
-  export type EvaluationCreateWithoutInterviewInput = {
-    id?: string
-    score: number
-    remarks: string
-    createdAt?: Date | string
-  }
-
-  export type EvaluationUncheckedCreateWithoutInterviewInput = {
-    id?: string
-    score: number
-    remarks: string
-    createdAt?: Date | string
-  }
-
-  export type EvaluationCreateOrConnectWithoutInterviewInput = {
-    where: EvaluationWhereUniqueInput
-    create: XOR<EvaluationCreateWithoutInterviewInput, EvaluationUncheckedCreateWithoutInterviewInput>
-  }
-
   export type UserUpsertWithoutInterviewsAsCandidateInput = {
     update: XOR<UserUpdateWithoutInterviewsAsCandidateInput, UserUncheckedUpdateWithoutInterviewsAsCandidateInput>
     create: XOR<UserCreateWithoutInterviewsAsCandidateInput, UserUncheckedCreateWithoutInterviewsAsCandidateInput>
@@ -10436,42 +9042,17 @@ export namespace Prisma {
     link?: StringFieldUpdateOperationsInput | string
   }
 
-  export type EvaluationUpsertWithoutInterviewInput = {
-    update: XOR<EvaluationUpdateWithoutInterviewInput, EvaluationUncheckedUpdateWithoutInterviewInput>
-    create: XOR<EvaluationCreateWithoutInterviewInput, EvaluationUncheckedCreateWithoutInterviewInput>
-    where?: EvaluationWhereInput
-  }
-
-  export type EvaluationUpdateToOneWithWhereWithoutInterviewInput = {
-    where?: EvaluationWhereInput
-    data: XOR<EvaluationUpdateWithoutInterviewInput, EvaluationUncheckedUpdateWithoutInterviewInput>
-  }
-
-  export type EvaluationUpdateWithoutInterviewInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    remarks?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type EvaluationUncheckedUpdateWithoutInterviewInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    score?: IntFieldUpdateOperationsInput | number
-    remarks?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type InterviewCreateWithoutRoomInput = {
     id?: string
     audioUrl?: string | null
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     candidate: UserCreateNestedOneWithoutInterviewsAsCandidateInput
     interviewer: UserCreateNestedOneWithoutInterviewsAsInterviewerInput
-    evaluation?: EvaluationCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewUncheckedCreateWithoutRoomInput = {
@@ -10482,9 +9063,9 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
-    evaluation?: EvaluationUncheckedCreateNestedOneWithoutInterviewInput
   }
 
   export type InterviewCreateOrConnectWithoutRoomInput = {
@@ -10509,11 +9090,11 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidate?: UserUpdateOneRequiredWithoutInterviewsAsCandidateNestedInput
     interviewer?: UserUpdateOneRequiredWithoutInterviewsAsInterviewerNestedInput
-    evaluation?: EvaluationUpdateOneWithoutInterviewNestedInput
   }
 
   export type InterviewUncheckedUpdateWithoutRoomInput = {
@@ -10524,77 +9105,9 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    evaluation?: EvaluationUncheckedUpdateOneWithoutInterviewNestedInput
-  }
-
-  export type InterviewCreateWithoutEvaluationInput = {
-    id?: string
-    audioUrl?: string | null
-    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
-    scheduledAt: Date | string
-    status?: $Enums.InterviewStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    candidate: UserCreateNestedOneWithoutInterviewsAsCandidateInput
-    interviewer: UserCreateNestedOneWithoutInterviewsAsInterviewerInput
-    room?: RoomCreateNestedOneWithoutInterviewInput
-  }
-
-  export type InterviewUncheckedCreateWithoutEvaluationInput = {
-    id?: string
-    candidateId: string
-    interviewerId: string
-    audioUrl?: string | null
-    codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
-    scheduledAt: Date | string
-    status?: $Enums.InterviewStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    room?: RoomUncheckedCreateNestedOneWithoutInterviewInput
-  }
-
-  export type InterviewCreateOrConnectWithoutEvaluationInput = {
-    where: InterviewWhereUniqueInput
-    create: XOR<InterviewCreateWithoutEvaluationInput, InterviewUncheckedCreateWithoutEvaluationInput>
-  }
-
-  export type InterviewUpsertWithoutEvaluationInput = {
-    update: XOR<InterviewUpdateWithoutEvaluationInput, InterviewUncheckedUpdateWithoutEvaluationInput>
-    create: XOR<InterviewCreateWithoutEvaluationInput, InterviewUncheckedCreateWithoutEvaluationInput>
-    where?: InterviewWhereInput
-  }
-
-  export type InterviewUpdateToOneWithWhereWithoutEvaluationInput = {
-    where?: InterviewWhereInput
-    data: XOR<InterviewUpdateWithoutEvaluationInput, InterviewUncheckedUpdateWithoutEvaluationInput>
-  }
-
-  export type InterviewUpdateWithoutEvaluationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
-    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidate?: UserUpdateOneRequiredWithoutInterviewsAsCandidateNestedInput
-    interviewer?: UserUpdateOneRequiredWithoutInterviewsAsInterviewerNestedInput
-    room?: RoomUpdateOneWithoutInterviewNestedInput
-  }
-
-  export type InterviewUncheckedUpdateWithoutEvaluationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    candidateId?: StringFieldUpdateOperationsInput | string
-    interviewerId?: StringFieldUpdateOperationsInput | string
-    audioUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
-    scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    room?: RoomUncheckedUpdateOneWithoutInterviewNestedInput
   }
 
   export type UserCreateWithoutAssignmentsAsCandidateInput = {
@@ -10820,6 +9333,7 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10831,6 +9345,7 @@ export namespace Prisma {
     codeHistory?: InterviewCreatecodeHistoryInput | InputJsonValue[]
     scheduledAt: Date | string
     status?: $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -10858,11 +9373,11 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     interviewer?: UserUpdateOneRequiredWithoutInterviewsAsInterviewerNestedInput
     room?: RoomUpdateOneWithoutInterviewNestedInput
-    evaluation?: EvaluationUpdateOneWithoutInterviewNestedInput
   }
 
   export type InterviewUncheckedUpdateWithoutCandidateInput = {
@@ -10872,10 +9387,10 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     room?: RoomUncheckedUpdateOneWithoutInterviewNestedInput
-    evaluation?: EvaluationUncheckedUpdateOneWithoutInterviewNestedInput
   }
 
   export type InterviewUncheckedUpdateManyWithoutCandidateInput = {
@@ -10885,6 +9400,7 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -10895,11 +9411,11 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidate?: UserUpdateOneRequiredWithoutInterviewsAsCandidateNestedInput
     room?: RoomUpdateOneWithoutInterviewNestedInput
-    evaluation?: EvaluationUpdateOneWithoutInterviewNestedInput
   }
 
   export type InterviewUncheckedUpdateWithoutInterviewerInput = {
@@ -10909,10 +9425,10 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     room?: RoomUncheckedUpdateOneWithoutInterviewNestedInput
-    evaluation?: EvaluationUncheckedUpdateOneWithoutInterviewNestedInput
   }
 
   export type InterviewUncheckedUpdateManyWithoutInterviewerInput = {
@@ -10922,6 +9438,7 @@ export namespace Prisma {
     codeHistory?: InterviewUpdatecodeHistoryInput | InputJsonValue[]
     scheduledAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
+    evaluation?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
