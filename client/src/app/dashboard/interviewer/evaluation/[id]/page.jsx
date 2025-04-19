@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import {Brain,Mic,UserCheck,ClipboardList, } from "lucide-react";
 
 export default function EvaluationPage() {
   const { id } = useParams();
@@ -58,31 +59,34 @@ export default function EvaluationPage() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Evaluation for Interview</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-center">📊 Interview Evaluation Report</h1>
+
       {decoded?.role === "INTERVIEWER" && (
-        <div>
-          <div className="mb-4">
+        <div className="bg-white rounded-xl shadow-md p-4 mb-6">
+          <h2 className="text-xl font-semibold mb-4">🎛️ Controls</h2>
+          <div className="flex flex-wrap gap-4 mb-4">
             <button
               onClick={() => triggerEvaluation("ai")}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mr-2"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
             >
-              Evaluate Code using AI
+              Evaluate Code (AI)
             </button>
             <button
               onClick={() => triggerEvaluation("audio")}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
             >
-              Evaluate Audio using AI
+              Evaluate Audio (AI)
             </button>
           </div>
-          <div className="mb-4">
+
+          <div className="space-y-3">
             <input
               type="number"
-              placeholder="Interviewer Score (0-100)"
+              placeholder="Score (0-100)"
               value={interviewerResponse}
               onChange={(e) => setInterviewerResponse(e.target.value)}
-              className="p-1 border rounded mr-2"
+              className="w-full p-2 border rounded"
               min="0"
               max="100"
             />
@@ -90,51 +94,64 @@ export default function EvaluationPage() {
               placeholder="Candidate Summary"
               value={candidateSummary}
               onChange={(e) => setCandidateSummary(e.target.value)}
-              className="p-1 border rounded mr-2 mt-2 w-1/2"
+              className="w-full p-2 border rounded"
+              rows={3}
             />
             <textarea
               placeholder="Interviewer Feedback"
               value={interviewerFeedback}
               onChange={(e) => setInterviewerFeedback(e.target.value)}
-              className="p-1 border rounded mt-2 w-1/2"
+              className="w-full p-2 border rounded"
+              rows={3}
             />
             <button
               onClick={submitInterviewerInput}
-              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 mt-2"
+              className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700"
             >
               Submit Input
             </button>
           </div>
         </div>
       )}
+
       {evaluation && (
-        <div className="mt-4">
-          <h2 className="text-xl font-semibold">Evaluation Results:</h2>
+        <div className="space-y-6">
           {evaluation.ai && (
-            <div className="mt-2">
-              <h3 className="font-medium">AI Evaluation:</h3>
-              <p>{evaluation.ai}</p>
+            <div className="bg-white rounded-xl shadow-md p-4">
+              <div className="flex items-center gap-2 text-xl font-semibold mb-2">
+                <Brain className="text-blue-500" /> AI Code Evaluation
+              </div>
+              <p className="text-gray-700 whitespace-pre-line">{evaluation.ai}</p>
             </div>
           )}
+
           {evaluation.audio && (
-            <div className="mt-2">
-              <h3 className="font-medium">Audio Evaluation:</h3>
-              <p>{evaluation.audio}</p>
+            <div className="bg-white rounded-xl shadow-md p-4">
+              <div className="flex items-center gap-2 text-xl font-semibold mb-2">
+                <Mic className="text-green-500" /> Audio Evaluation
+              </div>
+              <p className="text-gray-700 whitespace-pre-line">{evaluation.audio}</p>
             </div>
           )}
+
           {evaluation.interviewer && (
-            <div className="mt-2">
-              <h3 className="font-medium">Interviewer Input:</h3>
-              <p>Score: {evaluation.interviewer.response}</p>
-              <p>Summary: {evaluation.interviewer.summary}</p>
-              <p>Feedback: {evaluation.interviewer.feedback}</p>
-              <p>Time: {evaluation.interviewer.timestamp}</p>
+            <div className="bg-white rounded-xl shadow-md p-4">
+              <div className="flex items-center gap-2 text-xl font-semibold mb-2">
+                <UserCheck className="text-purple-500" /> Interviewer Feedback
+              </div>
+              <p><strong>Score:</strong> {evaluation.interviewer.response}</p>
+              <p><strong>Summary:</strong> {evaluation.interviewer.summary}</p>
+              <p><strong>Feedback:</strong> {evaluation.interviewer.feedback}</p>
+              <p className="text-sm text-gray-500 mt-2"><strong>Time:</strong> {evaluation.interviewer.timestamp}</p>
             </div>
           )}
+
           {evaluation.final && (
-            <div className="mt-2">
-              <h3 className="font-medium">Final Evaluation:</h3>
-              <p>{evaluation.final}</p>
+            <div className="bg-white rounded-xl shadow-md p-4">
+              <div className="flex items-center gap-2 text-xl font-semibold mb-2">
+                <ClipboardList className="text-orange-500" /> Final Evaluation
+              </div>
+              <p className="text-gray-700 whitespace-pre-line">{evaluation.final}</p>
             </div>
           )}
         </div>

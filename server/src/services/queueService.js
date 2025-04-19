@@ -171,13 +171,16 @@ const worker = new Worker(
     const interviewId = room.interviewId;
 
     // Fetch existing evaluation data and merge new data
-    const existingEvaluation = (await prisma.interview.findUnique({
+    const interview = await prisma.interview.findUnique({
       where: { id: interviewId },
       select: { evaluation: true },
-    })?.evaluation) || {};
+    });
+    
+    const existingEvaluation = interview?.evaluation || {};
+    
 
     let evaluationData = { ...existingEvaluation };
-    
+
     if (step === "ai") {
       if (!code) throw new Error("Code is required for AI evaluation");
       try {
