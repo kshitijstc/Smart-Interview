@@ -72,12 +72,12 @@ export default function EvaluationPage() {
             >
               Evaluate Code (AI)
             </button>
-            <button
+            {/* <button
               onClick={() => triggerEvaluation("audio")}
               className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
             >
               Evaluate Audio (AI)
-            </button>
+            </button> */}
           </div>
 
           <div className="space-y-3">
@@ -124,16 +124,6 @@ export default function EvaluationPage() {
               <p className="text-gray-700 whitespace-pre-line">{evaluation.ai}</p>
             </div>
           )}
-
-          {evaluation.audio && (
-            <div className="bg-white rounded-xl shadow-md p-4">
-              <div className="flex items-center gap-2 text-xl font-semibold mb-2">
-                <Mic className="text-green-500" /> Audio Evaluation
-              </div>
-              <p className="text-gray-700 whitespace-pre-line">{evaluation.audio}</p>
-            </div>
-          )}
-
           {evaluation.interviewer && (
             <div className="bg-white rounded-xl shadow-md p-4">
               <div className="flex items-center gap-2 text-xl font-semibold mb-2">

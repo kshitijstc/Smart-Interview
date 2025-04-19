@@ -30,21 +30,11 @@ export const triggerEvaluationAI = async (req, res) => {
     if (step === "ai") {
       if (!code)
         return res.status(400).json({ error: "Code not found in history" });
-      await evalQueue.add("code-eval", { roomId, step, code }); // Explicit job name and data
+      await evalQueue.add("code-eval", { roomId, step, code,audioUrl }); // Explicit job name and data
       return res
         .status(200)
         .json({ message: "Queued code evaluation successfully" });
     }
-
-    if (step === "audio") {
-      if (!audioUrl)
-        return res.status(400).json({ error: "Audio URL missing" });
-      await evalQueue.add("code-eval", { roomId, step, audioUrl }); // Explicit job name and data
-      return res
-        .status(200)
-        .json({ message: "Queued audio evaluation successfully" });
-    }
-
     return res.status(400).json({ error: "Invalid step value" });
   } catch (error) {
     console.error("Queue error:", error);
@@ -106,13 +96,11 @@ export const fetchEvaluation = async (req, res) => {
     const response = {
       ai: evaluation.ai || null,
       interviewer: evaluation.interviewer || null,
-      audio: evaluation.audio || null,
       final: evaluation.final || null,
     };
 
     if (showAI === "false") {
       delete response.ai;
-      delete response.audio;
     }
 
     return res.status(200).json(response);
