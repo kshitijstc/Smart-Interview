@@ -19,7 +19,7 @@ export default function TechStack() {
         { name: "HuggingFace", icon: "https://img.shields.io/badge/HuggingFace-FFDA6B?logo=huggingface&logoColor=black" },
         { name: "OpenRouter", icon: "https://img.shields.io/badge/OpenRouter-000000?logo=api&logoColor=white" },
         { name: "Docker", icon: "https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white" },
-        
+        { name: "RecordRTC", icon: "https://img.shields.io/badge/RecordRTC-4B0082?logo=webrtc&logoColor=white" },
     ];
   
     return (

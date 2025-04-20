@@ -9,7 +9,7 @@ export default function useRedirectBasedOnRole(){
     useEffect(()=>{
         const token=localStorage.getItem("token");
         if(!token){
-            router.push("/login");
+            router.push("/");
             return;
         }
         try{
@@ -19,12 +19,12 @@ export default function useRedirectBasedOnRole(){
             }else if(decoded.role==="CANDIDATE"){
                 router.push("/dashboard/candidate");
             }else{
-                router.push("/login");
+                router.push("/");
             }
         }catch(err){
             console.error("JWT decode error:", err);
             localStorage.removeItem("token");
-            router.push("/login");
+            router.push("/");
         }
     },[router]);
     return null;
