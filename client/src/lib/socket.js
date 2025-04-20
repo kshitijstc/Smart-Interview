@@ -1,3 +1,5 @@
 import {io} from "socket.io-client";
-const socket = io("http://localhost:5000");
+import { BACKEND_URL } from "@/lib/constants";
+
+const socket = io(`${BACKEND_URL}`);
 export default socket;

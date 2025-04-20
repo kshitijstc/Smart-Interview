@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import {Brain,Mic,UserCheck,ClipboardList, } from "lucide-react";
+import { BACKEND_URL } from "@/lib/constants";
 
 export default function EvaluationPage() {
   const { id } = useParams();
@@ -18,7 +19,7 @@ export default function EvaluationPage() {
 
   const triggerEvaluation = async (step) => {
     try {
-      await axios.post(`http://localhost:5000/api/evaluate/${step}`, { roomId: id, step });
+      await axios.post(`${BACKEND_URL}/api/evaluate/${step}`, { roomId: id, step });
       alert(`${step} evaluation queued!`);
       fetchEvaluation(); // Refresh evaluation after queuing
     } catch (error) {
@@ -28,7 +29,7 @@ export default function EvaluationPage() {
 
   const submitInterviewerInput = async () => {
     try {
-      await axios.post("http://localhost:5000/api/evaluate", {
+      await axios.post(`${BACKEND_URL}/api/evaluate`, {
         roomId: id,
         interviewerResponse,
         candidateSummary,
@@ -47,7 +48,7 @@ export default function EvaluationPage() {
 
   const fetchEvaluation = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/evaluate/${id}?showAI=true`);
+      const res = await axios.get(`${BACKEND_URL}/api/evaluate/${id}?showAI=true`);
       setEvaluation(res.data);
     } catch (error) {
       console.error("Error fetching evaluation:", error.response?.data || error.message);
@@ -56,8 +57,8 @@ export default function EvaluationPage() {
 
   useEffect(() => {
     fetchEvaluation();
-  }, []);
-
+  },[]);
+  
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-center">📊 Interview Evaluation Report</h1>
@@ -113,8 +114,7 @@ export default function EvaluationPage() {
           </div>
         </div>
       )}
-
-      {evaluation && (
+      {evaluation ? (
         <div className="space-y-6">
           {evaluation.ai && (
             <div className="bg-white rounded-xl shadow-md p-4">
@@ -136,14 +136,18 @@ export default function EvaluationPage() {
             </div>
           )}
 
-          {evaluation.final && (
+          {/* {evaluation.final && (
             <div className="bg-white rounded-xl shadow-md p-4">
               <div className="flex items-center gap-2 text-xl font-semibold mb-2">
                 <ClipboardList className="text-orange-500" /> Final Evaluation
               </div>
               <p className="text-gray-700 whitespace-pre-line">{evaluation.final}</p>
             </div>
-          )}
+          )} */}
+        </div>
+      ):(
+        <div className="bg-white rounded-xl shadow-md p-4">
+          <p className="text-gray-700">No evaluation data available.</p>
         </div>
       )}
     </div>

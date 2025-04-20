@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import dayjs from "dayjs";
+import { BACKEND_URL } from "@/lib/constants";
 
 export default function InterviewerDashboard() {
   const [stats, useStats] = useState({
@@ -18,7 +19,7 @@ export default function InterviewerDashboard() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://localhost:5000/api/interviews/my-interviewer",
+        `${BACKEND_URL}/api/interviews/my-interviewer`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -33,7 +34,7 @@ export default function InterviewerDashboard() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        "http://localhost:5000/api/interviews/stats",
+        `${BACKEND_URL}/api/interviews/stats`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -39,9 +39,7 @@ model User {
   // Relations
   interviewsAsCandidate  Interview[] @relation("Candidate")
   interviewsAsInterviewer Interview[] @relation("Interviewer")
-  slots       Slot[]
-  assignmentsAsCandidate  Assignment[] @relation("CandidateAssignment")
-  assignmentsAsInterviewer Assignment[] @relation("InterviewerAssignment")
+ 
 }
 model Interview {
   id            String      @id @default(uuid())
@@ -60,29 +58,11 @@ model Interview {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }
+
 model Room {
   id          String     @id @default(uuid())
   roomName    String     @unique
   link        String     @unique
   interview   Interview  @relation(fields: [interviewId], references: [id])
   interviewId String  @unique
-}
-
-model Assignment {
-  id             String  @id @default(uuid())
-  candidate      User    @relation("CandidateAssignment", fields: [candidateId], references: [id])
-  candidateId    String
-
-  interviewer    User    @relation("InterviewerAssignment", fields: [interviewerId], references: [id])
-  interviewerId  String
-}
-
-model Slot {
-  id            String      @id @default(uuid())
-  interviewer   User        @relation(fields: [interviewerId], references: [id])
-  interviewerId String
-
-  startTime     DateTime
-  endTime       DateTime
-  isBooked      Boolean     @default(false)
 }

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { BACKEND_URL } from "@/lib/constants";
 
 export default function AuthForm({ type }) {
   const {
@@ -16,9 +17,9 @@ export default function AuthForm({ type }) {
 
   const onSubmit = async (data) => {
     try {
-        const url = type === "login" ? "http://localhost:5000/api/login" : "http://localhost:5000/api/signup";
+        const url = type === "login" ? `${BACKEND_URL}/api/login` : `${BACKEND_URL}/api/signup`;
         const res = await axios.post(url, data);
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data.token) {
           localStorage.setItem("token", res.data.token);
         }
@@ -94,6 +95,17 @@ export default function AuthForm({ type }) {
       >
         {type === "login" ? "Login" : "Signup"}
       </button>
+
+      <p className="text-center text-sm">
+        {type === "login" ? "Don't have an account?" : "Already have an account?"}{" "} 
+        <span
+          className="text-blue-600 cursor-pointer"
+          onClick={() => router.push(type === "login" ? "/signup" : "/login")}
+        >
+          {type === "login" ? "Signup" : "Login"}
+        </span>
+      </p>
+
 
       {error && <p className="text-red-500 text-center">{error}</p>}
     </form>

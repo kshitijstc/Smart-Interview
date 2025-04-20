@@ -2,6 +2,7 @@
 import {use,useEffect,useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
+import { BACKEND_URL } from "@/lib/constants";
 
 export default function CandidateDashboard() {
   const [interviews, setInterviews] = useState([]);
@@ -13,7 +14,7 @@ export default function CandidateDashboard() {
       try {
         const token = localStorage.getItem("token");
         // console.log("Token:", token);
-        const res = await axios.get("http://localhost:5000/api/interviews/my", {
+        const res = await axios.get(`${BACKEND_URL}/api/interviews/my`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,7 +35,6 @@ export default function CandidateDashboard() {
       now.isBefore(scheduled.add(10, "minute"))
     );
   };
-  // console.log(interviews);
   const upcoming = interviews.filter((i) => i.status === "SCHEDULED");
   const past = interviews.filter((i) => i.status !== "SCHEDULED");
 
@@ -42,7 +42,6 @@ export default function CandidateDashboard() {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Candidate Dashboard</h1>
 
-      {/* Upcoming Interviews */}
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-4">Upcoming Interviews</h2>
         {upcoming.length === 0 ? (
@@ -83,7 +82,6 @@ export default function CandidateDashboard() {
         )}
       </section>
 
-      {/* Past Interviews */}
       <section>
         <h2 className="text-xl font-semibold mb-4">Past Interviews</h2>
         {past.length === 0 ? (

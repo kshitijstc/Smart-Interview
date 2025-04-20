@@ -6,6 +6,7 @@ import { JaaSMeeting } from "@jitsi/react-sdk";
 import axios from "axios";
 // import dynamic from "next/dynamic";
 import socket from "@/lib/socket";
+import { BACKEND_URL } from "@/lib/constants";
 
 // Dynamically import Editor to avoid SSR issues
 const Editor = lazy(() => import("@monaco-editor/react"));
@@ -55,7 +56,7 @@ export default function JoinInterview() {
     const initRoom = async () => {
       try {
         const res = await axios.get(  
-          `http://localhost:5000/api/interviews/room/${id}`,
+          `${BACKEND_URL}/api/interviews/room/${id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setJwtToken(res.data.jwt);
@@ -84,7 +85,7 @@ export default function JoinInterview() {
         formData.append("interviewId", id);
 
         try {
-          const res=await axios.post("http://localhost:5000/api/upload/audio", formData, {
+          const res=await axios.post(`${BACKEND_URL}/api/upload/audio`, formData, {
             headers: {
               Authorization: `Bearer ${token}`,
               "Content-Type": "multipart/form-data",
@@ -93,7 +94,7 @@ export default function JoinInterview() {
           const audioUrl = res.data.url;
           console.log("Cloudinary url",res.data.url);
           await axios.post(
-            `http://localhost:5000/api/interviews/${id}/save-audio-url`,
+            `${BACKEND_URL}/api/interviews/${id}/save-audio-url`,
             { audioUrl },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -187,7 +188,6 @@ export default function JoinInterview() {
         <div className="w-3/5 h-full border-r">
           <JaaSMeeting
             appId="vpaas-magic-cookie-0d902d80a4824b22bc588f40f4dd5929"
-            domain="8x8.vc"
             roomName={id}
             jwt={jwtToken}
             configOverwrite={{
@@ -212,7 +212,7 @@ export default function JoinInterview() {
                 alert("Interview ended");
                 try {
                   await axios.patch(
-                    `http://localhost:5000/api/interviews/room/${id}/status`,
+                    `${BACKEND_URL}/api/interviews/room/${id}/status`,
                     { status: "COMPLETED" },
                     { headers: { Authorization: `Bearer ${token}` } }
                   );
@@ -275,7 +275,7 @@ export default function JoinInterview() {
                 alert("Interview ended");
                 try {
                   await axios.patch(
-                    `http://localhost:5000/api/interviews/room/${id}/status`,
+                    `${BACKEND_URL}/api/interviews/room/${id}/status`,
                     { status: "COMPLETED" },
                     { headers: { Authorization: `Bearer ${token}` } }
                   );

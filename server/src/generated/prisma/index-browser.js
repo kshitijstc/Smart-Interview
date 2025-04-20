@@ -147,20 +147,6 @@ exports.Prisma.RoomScalarFieldEnum = {
   interviewId: 'interviewId'
 };
 
-exports.Prisma.AssignmentScalarFieldEnum = {
-  id: 'id',
-  candidateId: 'candidateId',
-  interviewerId: 'interviewerId'
-};
-
-exports.Prisma.SlotScalarFieldEnum = {
-  id: 'id',
-  interviewerId: 'interviewerId',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  isBooked: 'isBooked'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -201,9 +187,7 @@ exports.InterviewStatus = exports.$Enums.InterviewStatus = {
 exports.Prisma.ModelName = {
   User: 'User',
   Interview: 'Interview',
-  Room: 'Room',
-  Assignment: 'Assignment',
-  Slot: 'Slot'
+  Room: 'Room'
 };
 
 /**

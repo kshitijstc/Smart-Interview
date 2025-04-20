@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { BACKEND_URL } from "@/lib/constants";
 
 export default function NewInterview() {
   const [candidates, setCandidates] = useState([]);
@@ -16,7 +17,7 @@ export default function NewInterview() {
       try {
         const token = localStorage.getItem("token");
 
-        const res = await axios.get("http://localhost:5000/api/users/candidates", {
+        const res = await axios.get(`${BACKEND_URL}/api/users/candidates`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -37,7 +38,7 @@ export default function NewInterview() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/interviews",{ candidateId, scheduledAt },
+        `${BACKEND_URL}/api/interviews`,{ candidateId, scheduledAt },
         {
           headers: {
             "Content-Type": "application/json",
