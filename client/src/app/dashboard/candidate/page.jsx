@@ -1,30 +1,56 @@
 "use client";
-import {use,useEffect,useState } from "react";
+import {useEffect,useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import dayjs from "dayjs";
 import { BACKEND_URL } from "@/lib/constants";
 
 export default function CandidateDashboard() {
+  const [stats, useStats] = useState({
+    total: 0,
+    completed: 0,
+    scheduled: 0,
+    noShows: 0,
+  });
   const [interviews, setInterviews] = useState([]);
+  const router = useRouter();
   const [now, setNow] = useState(dayjs());
 
-  useEffect(() => {
-
-    const fetchInterviews = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        // console.log("Token:", token);
-        const res = await axios.get(`${BACKEND_URL}/api/interviews/my`, {
+  const fetchStats = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(
+        `${BACKEND_URL}/api/interviews/stats`,
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-        setInterviews(res.data);
-      } catch (err) {
-        console.error("Error fetching interviews:", err);
-      }
-    };
+        }
+      );
+      useStats(res.data);
+    } catch (err) {
+      console.error("Error fetching stats:", err);
+    }
+  };
+
+  const fetchInterviews = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      // console.log("Token:", token);
+      const res = await axios.get(`${BACKEND_URL}/api/interviews/my`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setInterviews(res.data);
+    } catch (err) {
+      console.error("Error fetching interviews:", err);
+    }
+  };
+
+  useEffect(() => {
     fetchInterviews();
+    fetchStats();
   }, []);
 
   const isJoinAvailable = (scheduledAt) => {
@@ -35,14 +61,40 @@ export default function CandidateDashboard() {
       now.isBefore(scheduled.add(10, "minute"))
     );
   };
+
+  const statCards = [
+    { label: "Total Interviews", value: stats.total },
+    { label: "Completed", value: stats.completed },
+    { label: "Scheduled", value: stats.scheduled },
+    { label: "No-shows", value: stats.noShows },
+  ];
+
   const upcoming = interviews.filter((i) => i.status === "SCHEDULED");
   const past = interviews.filter((i) => i.status !== "SCHEDULED");
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Candidate Dashboard</h1>
+      <p className="text-gray-600 mb-8">
+        Overview of your interview statistics.
+      </p>
 
-      <section className="mb-10">
+      {/* Cards Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {statCards.map((item, idx) => (
+          <div
+            key={idx}
+            className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow"
+          >
+            <p className="text-sm text-gray-500">{item.label}</p>
+            <h2 className="text-2xl font-bold text-gray-900 mt-2">
+              {item.value}
+            </h2>
+          </div>
+        ))}
+      </div>
+
+      <section className="mt-12 mb-10">
         <h2 className="text-xl font-semibold mb-4">Upcoming Interviews</h2>
         {upcoming.length === 0 ? (
           <p className="text-gray-500">No upcoming interviews</p>
@@ -51,7 +103,7 @@ export default function CandidateDashboard() {
             {upcoming.map((i) => (
               <div
                 key={i.id}
-                className="p-4 border rounded-lg shadow-sm bg-white flex flex-col md:flex-row justify-between items-center"
+                className="p-4  rounded-lg shadow-sm hover:shadow-md bg-white flex flex-col md:flex-row justify-between items-center"
               >
                 <div>
                   <p className="font-medium">
@@ -91,7 +143,7 @@ export default function CandidateDashboard() {
             {past.map((i) => (
               <div
                 key={i.id}
-                className="p-4 border rounded-lg shadow-sm bg-white flex flex-col md:flex-row justify-between items-start"
+                className="p-4 hover:shadow-md rounded-lg shadow-sm bg-white flex flex-col md:flex-row justify-between items-start"
               >
                 <div>
                   <p className="font-medium">
@@ -111,21 +163,6 @@ export default function CandidateDashboard() {
                 >
                   View Evaluation
                 </a>
-                {i.evaluation && (
-                  <details className="mt-3 md:mt-0 bg-gray-100 p-3 rounded w-full md:w-1/2">
-                    <summary className="cursor-pointer text-sm font-semibold mb-2">
-                      View Feedback
-                    </summary>
-                    <div className="text-sm mt-2">
-                      <p>
-                        <strong>Remarks:</strong> {i.evaluation.remarks}
-                      </p>
-                      <p>
-                        <strong>Score:</strong> {i.evaluation.score}
-                      </p>
-                    </div>
-                  </details>
-                )}
               </div>
             ))}
           </div>

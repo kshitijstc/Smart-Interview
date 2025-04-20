@@ -1,7 +1,7 @@
-import {PrismaClient } from "../generated/prisma/client.js"; 
+import { PrismaClient } from "../generated/prisma/client.js";
 import jwt from "jsonwebtoken";
 
-const prisma=new PrismaClient();
+const prisma = new PrismaClient();
 
 export const getMyInterviews = async (req, res) => {
   try {
@@ -17,14 +17,14 @@ export const getMyInterviews = async (req, res) => {
             email: true,
           },
         },
-        room: true ,
+        room: true,
       },
       orderBy: {
         scheduledAt: "asc",
       },
     });
     // console.log("Interviews:", interviews);
-    res.status(201).json(interviews)
+    res.status(201).json(interviews);
   } catch (err) {
     console.error("Error fetching candidate interviews:", err);
     res.status(500).json({ error: "Server Error" });
@@ -44,7 +44,7 @@ export const getMyInterviewerInterviews = async (req, res) => {
             email: true,
           },
         },
-        room: true ,
+        room: true,
       },
       orderBy: {
         scheduledAt: "asc",
@@ -58,19 +58,44 @@ export const getMyInterviewerInterviews = async (req, res) => {
   }
 };
 
-
 export const getInterviewStats = async (req, res) => {
-  const userId=req.user.id;
-  // console.log("User:", req.user);
-  try{
-    const total=await prisma.interview.count({where:{interviewerId:userId}});
-    const completed=await prisma.interview.count({where:{interviewerId:userId,status:"COMPLETED"}});
-    const scheduled=await prisma.interview.count({where:{interviewerId:userId,status:"SCHEDULED"}});
-    const noShows=await prisma.interview.count({where:{interviewerId:userId,status:"NO_SHOW"}});
-    return res.status(200).json({total,completed,scheduled,noShows});
-  }catch(err){
+  const userId = req.user.id;
+  const role = req.user.role;
+  try {
+    if (role === "INTERVIEWER") {
+      const total = await prisma.interview.count({
+        where: { interviewerId: userId },
+      });
+      const completed = await prisma.interview.count({
+        where: { interviewerId: userId, status: "COMPLETED" },
+      });
+      const scheduled = await prisma.interview.count({
+        where: { interviewerId: userId, status: "SCHEDULED" },
+      });
+      const noShows = await prisma.interview.count({
+        where: { interviewerId: userId, status: "NO_SHOW" },
+      });
+      return res.status(200).json({ total, completed, scheduled, noShows });
+    } 
+    if(role==="CANDIDATE"){
+      const total = await prisma.interview.count({
+        where: { candidateId: userId },
+      });
+      const completed = await prisma.interview.count({
+        where: { candidateId: userId, status: "COMPLETED" },
+      });
+      const scheduled = await prisma.interview.count({
+        where: { candidateId: userId, status: "SCHEDULED" },
+      });
+      const noShows = await prisma.interview.count({
+        where: { candidateId: userId, status: "NO_SHOW" },
+      });
+      return res.status(200).json({ total, completed, scheduled, noShows });
+    }
+    
+  } catch (err) {
     console.error("Error fetching interview stats:", err);
-    return res.status(500).json({error:"Server error"});
+    return res.status(500).json({ error: "Server error" });
   }
 };
 
@@ -79,7 +104,9 @@ export const createInterview = async (req, res) => {
   const interviewerId = req.user.id;
 
   if (!candidateId || !scheduledAt) {
-    return res.status(400).json({ error: "Missing candidateId or scheduledAt" });
+    return res
+      .status(400)
+      .json({ error: "Missing candidateId or scheduledAt" });
   }
 
   try {
@@ -120,27 +147,28 @@ export const getInterviewRoom = async (req, res) => {
         iss: "chat",
         sub: appId,
         room: link,
-        context: { user: { 
-          role: req.user.role ,
-          moderator: req.user.role === "INTERVIEWER" ? "true" : "false", 
-        } }
+        context: {
+          user: {
+            role: req.user.role,
+            moderator: req.user.role === "INTERVIEWER" ? "true" : "false",
+          },
+        },
       },
       jwtSecret,
-      { 
-        expiresIn: '3h',
-        algorithm: 'RS256', 
+      {
+        expiresIn: "3h",
+        algorithm: "RS256",
         header: {
-          kid: keyId 
-        }
+          kid: keyId,
+        },
       }
     );
-    res.status(200).json({ role: req.user.role , room, jwt: token });
+    res.status(200).json({ role: req.user.role, room, jwt: token });
   } catch (err) {
     console.error("Error fetching interview room:", err);
     res.status(500).json({ error: "Server error" });
   }
 };
-
 
 export const updateInterviewStatus = async (req, res) => {
   const { link } = req.params;
@@ -163,11 +191,11 @@ export const updateInterviewStatus = async (req, res) => {
 
     console.log("Updated Interview status successfully");
     return res.status(200);
-  }catch(err){
+  } catch (err) {
     console.error("Error updating interview status:", err);
-    return res.status(500).json({error:"Server error"});
+    return res.status(500).json({ error: "Server error" });
   }
-}
+};
 
 export const saveInterviewCode = async (req, res) => {
   const { id } = req.params;
@@ -175,7 +203,7 @@ export const saveInterviewCode = async (req, res) => {
 
   try {
     const room = await prisma.room.findUnique({
-      where: { link:id },
+      where: { link: id },
     });
     await prisma.interview.update({
       where: { id: room.interviewId },
@@ -188,22 +216,21 @@ export const saveInterviewCode = async (req, res) => {
   }
 };
 
-
 export const saveAudioUrl = async (req, res) => {
   const { id } = req.params;
   const { audioUrl } = req.body;
   try {
     const room = await prisma.room.findUnique({
-      where: { link:id },
+      where: { link: id },
     });
     await prisma.interview.update({
       where: { id: room.interviewId },
-      data: { audioUrl }
+      data: { audioUrl },
     });
     console.log(`Saved audio URL for room ${id}: ${audioUrl}`);
     res.status(200).json({ message: "Audio URL saved" });
   } catch (err) {
     console.error("Failed to save audio URL:", err);
     res.status(500).json({ error: "Failed to save audio URL" });
-  } 
+  }
 };

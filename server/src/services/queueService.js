@@ -31,15 +31,12 @@ const worker = new Worker(
 
     const interviewId = room.interviewId;
 
-    // Fetch existing evaluation data and merge new data
     const interview = await prisma.interview.findUnique({
       where: { id: interviewId },
       select: { evaluation: true },
     });
     
     const existingEvaluation = interview?.evaluation || {};
-    
-
     let evaluationData = { ...existingEvaluation };
 
     if (step === "ai") {

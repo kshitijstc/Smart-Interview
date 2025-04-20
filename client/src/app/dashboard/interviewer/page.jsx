@@ -101,10 +101,10 @@ export default function InterviewerDashboard() {
       {/* Create Button */}
       <div className="mt-10">
         <button
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+          className="px-7 py-9 bg-blue-600 hover:bg-blue-700 text-white text-md font-semibold rounded-lg transition-colors"
           onClick={handleCreateInterview}
         >
-          Create New Interview
+          + Create New Interview
         </button>
       </div>
 
@@ -118,7 +118,7 @@ export default function InterviewerDashboard() {
             {upcoming.map((i) => (
               <div
                 key={i.id}
-                className="p-4 border rounded-lg shadow-sm bg-white flex flex-col md:flex-row justify-between items-center"
+                className="p-4 rounded-lg shadow-sm hover:shadow-md bg-white flex flex-col md:flex-row justify-between items-center"
               >
                 <div>
                   <p className="font-medium">Candidate: {i.candidate.name}</p>
@@ -157,7 +157,7 @@ export default function InterviewerDashboard() {
             {past.map((i) => (
               <div
                 key={i.id}
-                className="p-4 border rounded-lg shadow-sm bg-white flex flex-col md:flex-row justify-between items-start"
+                className="p-4 rounded-lg shadow-sm hover:shadow-md bg-white flex flex-col md:flex-row justify-between items-start"
               >
                 <div>
                   <p className="font-medium">Candidate: {i.candidate.name}</p>

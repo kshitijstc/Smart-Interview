@@ -1,7 +1,7 @@
 
 
 import { useState } from "react";
-import { Menu, Home, BarChart, Users, LogOut,ChevronRight,ChevronLeft } from "lucide-react";
+import { FileUser, Home, BarChart, Users, LogOut,ChevronRight,ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 export default function Sidebar({ role }) {
@@ -60,17 +60,28 @@ export default function Sidebar({ role }) {
           {role === "INTERVIEWER" && (
             <>
               <Link
-                href="/dashboard/stats"
+                href="/dashboard/interviewer/evaluate"
                 className="flex items-center gap-3 hover:text-blue-600"
               >
-                <BarChart size={20} /> Statistics
+                <FileUser size={20} /> Evaluate
               </Link>
-              <Link
-                href="/dashboard/users"
+              {/* <Link
+                href="/dashboard/interviewer/users"
                 className="flex items-center gap-3 hover:text-blue-600"
               >
                 <Users size={20} /> Users
+              </Link> */}
+            </>
+          )}
+          {role === "CANDIDATE" && (
+            <>
+              <Link
+                href="/dashboard/candidate/practice"
+                className="flex items-center gap-3 hover:text-blue-600"
+              >
+                <BarChart size={20} /> Practice
               </Link>
+              
             </>
           )}
           <button

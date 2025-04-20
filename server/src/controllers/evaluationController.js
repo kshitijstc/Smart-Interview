@@ -30,7 +30,21 @@ export const triggerEvaluationAI = async (req, res) => {
     if (step === "ai") {
       if (!code)
         return res.status(400).json({ error: "Code not found in history" });
-      await evalQueue.add("code-eval", { roomId, step, code,audioUrl }); // Explicit job name and data
+      await evalQueue.add("code-eval", 
+      { 
+        roomId, 
+        step, 
+        code,
+        audioUrl 
+      },
+      {
+        removeOnComplete: {
+          age: 18000, // 5 hours
+        },
+        removeOnFail: {
+          age: 18000, // Optional
+        },
+      });
       return res
         .status(200)
         .json({ message: "Queued code evaluation successfully" });
@@ -68,6 +82,14 @@ export const triggerEvaluation = async (req, res) => {
       interviewerFeedback,
       candidateSummary,
       step,
+    },
+    {
+      removeOnComplete: {
+        age: 18000, // 5 hours
+      },
+      removeOnFail: {
+        age: 18000, // Optional
+      },
     }); // Explicit job name and data
     return res.status(200).json({ message: "Queued evaluation successfully" });
   } catch (error) {
