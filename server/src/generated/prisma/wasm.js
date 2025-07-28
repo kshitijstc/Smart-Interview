@@ -132,6 +132,7 @@ exports.Prisma.InterviewScalarFieldEnum = {
   candidateId: 'candidateId',
   interviewerId: 'interviewerId',
   audioUrl: 'audioUrl',
+  transcript: 'transcript',
   codeHistory: 'codeHistory',
   scheduledAt: 'scheduledAt',
   status: 'status',

@@ -4,13 +4,10 @@ import { useEffect, useState, useRef, lazy, Suspense } from "react";
 import { useParams } from "next/navigation";
 import { JaaSMeeting } from "@jitsi/react-sdk";
 import axios from "axios";
-// import dynamic from "next/dynamic";
 import socket from "@/lib/socket";
 import { BACKEND_URL } from "@/lib/constants";
-
-// Dynamically import Editor to avoid SSR issues
+import  useSpeechToText  from 'react-hook-speech-to-text';
 const Editor = lazy(() => import("@monaco-editor/react"));
-// const Editor = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
 export default function JoinInterview() {
   const { id } = useParams();
@@ -19,6 +16,7 @@ export default function JoinInterview() {
   const [language, setLanguage] = useState("cpp");
   const [isJaaSLoaded, setIsJaaSLoaded] = useState(false);
   const [code, setCode] = useState("// Start coding here...");
+  const [transcript, setTranscript] = useState("");
   const [rightWidth, setRightWidth] = useState("35%");
   const mediaRecorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
@@ -54,6 +52,41 @@ export default function JoinInterview() {
     }
   };
 
+  // React Hook Speech-to-Text implementation
+  const {
+    error,
+    interimResult,
+    isRecording,
+    results,
+    startSpeechToText,
+    stopSpeechToText,
+  } = useSpeechToText({
+    continuous: true,
+    useLegacyResults: false,
+    speechRecognitionApiName: 'webkitSpeechRecognition',
+  });
+
+  // Update transcript when results change
+  useEffect(() => {
+    if (results.length > 0) {
+      const fullTranscript = results.map(result => result.transcript).join(' ');
+      setTranscript(fullTranscript);
+    }
+  }, [results]);
+
+  const toggleSpeechToText = () => {
+    if (error) {
+      alert('Speech recognition is not supported in this browser');
+      return;
+    }
+
+    if (isRecording) {
+      stopSpeechToText();
+    } else {
+      startSpeechToText();
+    }
+  };
+
   useEffect(() => {
     const initRoom = async () => {
       try {
@@ -70,60 +103,60 @@ export default function JoinInterview() {
     if (id) initRoom();
   }, [id]);
 
-  const startRecording = async () => {
-    try {
-      alert("🎙️ Recording Started");
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
-      recordedChunksRef.current = [];
+  // const startRecording = async () => {
+  //   try {
+  //     alert("🎙️ Recording Started");
+  //     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  //     const mediaRecorder = new MediaRecorder(stream);
+  //     recordedChunksRef.current = [];
 
-      mediaRecorder.ondataavailable = (event) =>
-        event.data.size > 0 && recordedChunksRef.current.push(event.data);
+  //     mediaRecorder.ondataavailable = (event) =>
+  //       event.data.size > 0 && recordedChunksRef.current.push(event.data);
 
-      mediaRecorder.onstop = async () => {
-        const blob = new Blob(recordedChunksRef.current, {
-          type: "audio/webm",
-        });
-        const formData = new FormData();
-        formData.append("audio", blob);
-        formData.append("interviewId", id);
+  //     mediaRecorder.onstop = async () => {
+  //       const blob = new Blob(recordedChunksRef.current, {
+  //         type: "audio/webm",
+  //       });
+  //       const formData = new FormData();
+  //       formData.append("audio", blob);
+  //       formData.append("interviewId", id);
 
-        try {
-          const res = await axios.post(
-            `${BACKEND_URL}/api/upload/audio`,
-            formData,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
-          const audioUrl = res.data.url;
-          console.log("Cloudinary url", res.data.url);
-          await axios.post(
-            `${BACKEND_URL}/api/interviews/${id}/save-audio-url`,
-            { audioUrl },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-        } catch (error) {
-          console.error("Upload failed:", error);
-        }
-      };
+  //       try {
+  //         const res = await axios.post(
+  //           `${BACKEND_URL}/api/upload/audio`,
+  //           formData,
+  //           {
+  //             headers: {
+  //               Authorization: `Bearer ${token}`,
+  //               "Content-Type": "multipart/form-data",
+  //             },
+  //           }
+  //         );
+  //         const audioUrl = res.data.url;
+  //         console.log("Cloudinary url", res.data.url);
+  //         await axios.post(
+  //           `${BACKEND_URL}/api/interviews/${id}/save-audio-url`,
+  //           { audioUrl },
+  //           { headers: { Authorization: `Bearer ${token}` } }
+  //         );
+  //       } catch (error) {
+  //         console.error("Upload failed:", error);
+  //       }
+  //     };
 
-      mediaRecorder.start();
-      mediaRecorderRef.current = mediaRecorder;
-    } catch (error) {
-      console.error("Failed to start recording:", error);
-    }
-  };
+  //     mediaRecorder.start();
+  //     mediaRecorderRef.current = mediaRecorder;
+  //   } catch (error) {
+  //     console.error("Failed to start recording:", error);
+  //   }
+  // };
 
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      alert("✅ Recording Stopped & Uploaded");
-      mediaRecorderRef.current.stop();
-    }
-  };
+  // const stopRecording = () => {
+  //   if (mediaRecorderRef.current) {
+  //     alert("✅ Recording Stopped & Uploaded");
+  //     mediaRecorderRef.current.stop();
+  //   }
+  // };
 
   // const handleMouseDown = (e) => {
   //   document.addEventListener("mousemove", handleMouseMove);
@@ -164,17 +197,52 @@ export default function JoinInterview() {
         {role === "INTERVIEWER" && (
           <div className="p-2 flex gap-2">
             <button
-              onClick={startRecording}
-              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 cursor-pointer"
+              onClick={toggleSpeechToText}
+              className={`px-4 py-2 rounded-lg cursor-pointer transition-colors ${
+                isRecording 
+                  ? 'bg-red-600 text-white hover:bg-red-700' 
+                  : 'bg-green-600 text-white hover:bg-green-700'
+              }`}
             >
-              Start Recording
+              {isRecording ? '🛑 Stop' : '🎙️ Start'} Speech-to-Text
             </button>
-            <button
-              onClick={stopRecording}
-              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 cursor-pointer"
-            >
-              Stop + Upload
-            </button>
+            
+            {transcript && (
+              <>
+                <button
+                  onClick={async () => {
+                    try {
+                      await axios.post(
+                        `${BACKEND_URL}/api/interviews/${id}/save-transcript`,
+                        { transcript },
+                        { headers: { Authorization: `Bearer ${token}` } }
+                      );
+                      alert('✅ Transcript saved to database! You can now use it in the evaluation page.');
+                    } catch (error) {
+                      console.error('Failed to save transcript:', error);
+                      alert('❌ Failed to save transcript. Please try again.');
+                    }
+                  }}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 cursor-pointer"
+                >
+                  💾 Save Transcript
+                </button>
+                <div className="text-sm text-gray-600 max-w-xs truncate">
+                  Transcript: {transcript.length > 50 ? transcript.substring(0, 50) + '...' : transcript}
+                </div>
+              </>
+            )}
+            
+            {interimResult && isRecording && (
+              <div className="text-sm text-blue-600 max-w-xs truncate italic">
+                Interim: {interimResult}
+              </div>
+            )}
+            {error && (
+              <div className="text-sm text-red-600 max-w-xs">
+                Error: {error.message || 'Speech recognition failed'}
+              </div>
+            )}
           </div>
         )}
 
@@ -196,6 +264,7 @@ export default function JoinInterview() {
         <div className="w-3/5 h-full border-r">
           <JaaSMeeting
             appId="vpaas-magic-cookie-0d902d80a4824b22bc588f40f4dd5929"
+            domain="8x8.vc"
             roomName={id}
             jwt={jwtToken}
             configOverwrite={{

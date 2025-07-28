@@ -49,6 +49,7 @@ model Interview {
   interviewerId String
 
   audioUrl      String?     
+  transcript    String?     
   codeHistory   Json[]     @default([])
   room          Room?
   scheduledAt   DateTime

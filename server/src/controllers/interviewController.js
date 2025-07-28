@@ -205,9 +205,22 @@ export const saveInterviewCode = async (req, res) => {
     const room = await prisma.room.findUnique({
       where: { link: id },
     });
+    
+    // Get current interview to check existing codeHistory
+    const interview = await prisma.interview.findUnique({
+      where: { id: room.interviewId },
+      select: { codeHistory: true },
+    });
+    
+    // Add new code to codeHistory
+    const updatedCodeHistory = [
+      ...(interview.codeHistory || []),
+      { code, timestamp: new Date().toISOString() }
+    ];
+    
     await prisma.interview.update({
       where: { id: room.interviewId },
-      data: { candidateCode: code },
+      data: { codeHistory: updatedCodeHistory },
     });
     res.json({ message: "Code saved" });
   } catch (error) {
@@ -216,21 +229,27 @@ export const saveInterviewCode = async (req, res) => {
   }
 };
 
-export const saveAudioUrl = async (req, res) => {
+export const saveTranscript = async (req, res) => {
   const { id } = req.params;
-  const { audioUrl } = req.body;
+  const { transcript } = req.body;
   try {
     const room = await prisma.room.findUnique({
       where: { link: id },
     });
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+    
     await prisma.interview.update({
       where: { id: room.interviewId },
-      data: { audioUrl },
+      data: { transcript },
     });
-    console.log(`Saved audio URL for room ${id}: ${audioUrl}`);
-    res.status(200).json({ message: "Audio URL saved" });
+    console.log(`Saved transcript for room ${id}: ${transcript?.substring(0, 100)}...`);
+    res.status(200).json({ message: "Transcript saved successfully" });
   } catch (err) {
-    console.error("Failed to save audio URL:", err);
-    res.status(500).json({ error: "Failed to save audio URL" });
+    console.error("Failed to save transcript:", err);
+    res.status(500).json({ error: "Failed to save transcript" });
   }
 };
+
+

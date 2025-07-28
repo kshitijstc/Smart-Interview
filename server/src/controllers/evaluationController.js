@@ -20,22 +20,48 @@ export const triggerEvaluationAI = async (req, res) => {
     if (!interview)
       return res.status(404).json({ error: "Interview not found" });
 
-    const code =
-      interview.codeHistory?.length > 0
-        ? interview.codeHistory[interview.codeHistory.length - 1].code
-        : null;
-    // console.log("Evaluation Controller code:", code); // Debugging line
-    const audioUrl = interview.audioUrl;
+    console.log("Full interview data:", interview);
+    console.log("Code history length:", interview.codeHistory?.length);
+    console.log("Code history entries:", interview.codeHistory?.map((entry, index) => ({
+      index,
+      hasCode: !!entry?.code,
+      codeLength: entry?.code?.length || 0,
+      timestamp: entry?.timestamp
+    })));
+    
+    // Find the last complete code entry (skip truncated entries)
+    let code = null;
+    if (interview.codeHistory && interview.codeHistory.length > 0) {
+      // Start from the end and find the first complete entry
+      for (let i = interview.codeHistory.length - 1; i >= 0; i--) {
+        const entry = interview.codeHistory[i];
+        if (entry && entry.code && !entry.truncated) {
+          code = entry.code;
+          console.log(`Found complete code at index ${i}:`, code.substring(0, 100) + "...");
+          break;
+        }
+      }
+      
+      if (!code) {
+        console.log("No complete code entry found in history");
+      }
+    }
+
+    console.log("Final extracted code:", code ? code.substring(0, 100) + "..." : "null");
 
     if (step === "ai") {
       if (!code)
         return res.status(400).json({ error: "Code not found in history" });
+      
+      if (!interview.transcript)
+        return res.status(400).json({ error: "No transcript found for this interview. Please record the candidate's explanation first." });
+
       await evalQueue.add("code-eval", 
       { 
         roomId, 
         step, 
         code,
-        audioUrl 
+        transcript: interview.transcript
       },
       {
         removeOnComplete: {
@@ -111,7 +137,7 @@ export const fetchEvaluation = async (req, res) => {
     if (!room) return res.status(404).json({ message: "Room not found" });
     const interview = await prisma.interview.findUnique({
       where: { id: room.interviewId },
-      select: { evaluation: true },
+      select: { evaluation: true, transcript: true },
     });
 
     const evaluation = interview.evaluation || {};
@@ -119,6 +145,7 @@ export const fetchEvaluation = async (req, res) => {
       ai: evaluation.ai || null,
       interviewer: evaluation.interviewer || null,
       final: evaluation.final || null,
+      transcript: interview.transcript || null,
     };
 
     if (showAI === "false") {

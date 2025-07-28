@@ -2,7 +2,6 @@ import express from "express";
 import authRoutes from "./routes/authRoutes.js";
 import interviewsRoutes from "./routes/interviewsRoutes.js";
 import usersRoutes from "./routes/usersRoutes.js";
-import audioUploadRoutes from "./routes/audioUploadRoutes.js";
 import evaluationRoutes from "./routes/evaluationRoutes.js";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -37,7 +36,6 @@ app.get("/", (req, res) => {
 app.use("/api",authRoutes);
 app.use("/api/users",usersRoutes);
 app.use("/api/interviews",interviewsRoutes);
-app.use("/api/upload",audioUploadRoutes);
 app.use("/api/evaluate",evaluationRoutes);
 
 io.on('connection', (socket) => {
@@ -54,9 +52,22 @@ io.on('connection', (socket) => {
       const room = await prisma.room.findUnique({ where: { link: roomId } });
       if (!room) throw new Error("Room not found");
       const interview = await prisma.interview.findUnique({
-        where: { id: room.interviewId }
+        where: { id: room.interviewId },
+        select: { codeHistory: true }
       });
-      const updatedHistory = [...(interview?.codeHistory || []), { code, timestamp: new Date().toISOString() }];
+      
+      console.log("Current codeHistory length:", interview.codeHistory?.length);
+      
+      // Append new code to existing history
+      const newEntry = { code, timestamp: new Date().toISOString() };
+      const updatedHistory = [
+        ...(interview.codeHistory || []),
+        newEntry
+      ];
+      
+      console.log("New entry:", { code: code.substring(0, 50) + "...", timestamp: newEntry.timestamp });
+      console.log("Updated codeHistory length:", updatedHistory.length);
+      
       await prisma.interview.update({
         where: { id: room.interviewId },
         data: { codeHistory: updatedHistory }

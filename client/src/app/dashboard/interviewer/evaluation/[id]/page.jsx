@@ -13,13 +13,17 @@ export default function EvaluationPage() {
   const [interviewerResponse, setInterviewerResponse] = useState("");
   const [candidateSummary, setCandidateSummary] = useState("");
   const [interviewerFeedback, setInterviewerFeedback] = useState("");
+  const [transcript, setTranscript] = useState("");
 
   const token = localStorage.getItem("token");
   const decoded = token ? jwtDecode(token) : null;
 
   const triggerEvaluation = async (step) => {
     try {
-      await axios.post(`${BACKEND_URL}/api/evaluate/${step}`, { roomId: id, step });
+      const payload = { roomId: id, step };
+      console.log("Sending evaluation request:", payload);
+      console.log("Room ID:", id);
+      await axios.post(`${BACKEND_URL}/api/evaluate/${step}`, payload);
       alert(`${step} evaluation queued!`);
       fetchEvaluation(); // Refresh evaluation after queuing
     } catch (error) {
@@ -50,6 +54,10 @@ export default function EvaluationPage() {
     try {
       const res = await axios.get(`${BACKEND_URL}/api/evaluate/${id}?showAI=true`);
       setEvaluation(res.data);
+      // Set transcript from database
+      if (res.data.transcript) {
+        setTranscript(res.data.transcript);
+      }
     } catch (error) {
       console.error("Error fetching evaluation:", error.response?.data || error.message);
     }
@@ -57,28 +65,45 @@ export default function EvaluationPage() {
 
   useEffect(() => {
     fetchEvaluation();
-  },[]);
+  },[id]);
   
   return (
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6 text-center">📊 Interview Evaluation Report</h1>
+      
+      
 
       {decoded?.role === "INTERVIEWER" && (
         <div className="bg-white rounded-xl shadow-md p-4 mb-6">
           <h2 className="text-xl font-semibold mb-4">🎛️ Controls</h2>
-          <div className="flex flex-wrap gap-4 mb-4">
-            <button
-              onClick={() => triggerEvaluation("ai")}
-              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-            >
-              Evaluate Code (AI)
-            </button>
-            {/* <button
-              onClick={() => triggerEvaluation("audio")}
-              className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-            >
-              Evaluate Audio (AI)
-            </button> */}
+          <div className="space-y-4">
+            {transcript ? (
+              <div>
+                
+                <div className="bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm text-gray-800 max-h-32 overflow-y-auto">
+                  {transcript}
+                </div>
+                <div className="text-sm text-gray-500 mt-1">
+                  Character count: {transcript.length}
+                </div>
+              </div>
+            ) : (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                <p className="text-yellow-800 text-sm">
+                  ⚠️ No transcript found. Please record the candidate's explanation in the interview room first.
+                </p>
+              </div>
+            )}
+            
+            <div className="flex flex-wrap gap-4">
+              <button
+                onClick={() => triggerEvaluation("ai")}
+                disabled={!transcript}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              >
+                Evaluate Code (AI)
+              </button>
+            </div>
           </div>
 
           <div className="space-y-3">
@@ -116,7 +141,8 @@ export default function EvaluationPage() {
       )}
       {evaluation ? (
         <div className="space-y-6">
-          {evaluation.ai && (
+          {/* AI Evaluation - Only visible to INTERVIEWER */}
+          {evaluation.ai && decoded?.role === "INTERVIEWER" && (
             <div className="bg-white rounded-xl shadow-md p-4">
               <div className="flex items-center gap-2 text-xl font-semibold mb-2">
                 <Brain className="text-blue-500" /> AI Code Evaluation
@@ -124,6 +150,8 @@ export default function EvaluationPage() {
               <p className="text-gray-700 whitespace-pre-line">{evaluation.ai}</p>
             </div>
           )}
+
+          {/* Interviewer Feedback - Visible to both INTERVIEWER and CANDIDATE */}
           {evaluation.interviewer && (
             <div className="bg-white rounded-xl shadow-md p-4">
               <div className="flex items-center gap-2 text-xl font-semibold mb-2">
@@ -136,14 +164,7 @@ export default function EvaluationPage() {
             </div>
           )}
 
-          {/* {evaluation.final && (
-            <div className="bg-white rounded-xl shadow-md p-4">
-              <div className="flex items-center gap-2 text-xl font-semibold mb-2">
-                <ClipboardList className="text-orange-500" /> Final Evaluation
-              </div>
-              <p className="text-gray-700 whitespace-pre-line">{evaluation.final}</p>
-            </div>
-          )} */}
+          
         </div>
       ):(
         <div className="bg-white rounded-xl shadow-md p-4">
