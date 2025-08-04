@@ -136,9 +136,3 @@ npm run dev
 
 ---
 
-## License
-[MIT](LICENSE)
-
----
-
-> _For demo and screenshots, replace the dummy links with your actual resources._ 
