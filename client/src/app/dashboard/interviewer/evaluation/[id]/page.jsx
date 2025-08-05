@@ -1,3 +1,6 @@
+
+
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -23,7 +26,7 @@ export default function EvaluationPage() {
       const payload = { roomId: id, step };
       console.log("Sending evaluation request:", payload);
       console.log("Room ID:", id);
-      await axios.post(`${BACKEND_URL}/api/evaluate/${step}`, payload);
+      await axios.post(`${BACKEND_URL}/api/evaluate/${step}`,payload);
       alert(`${step} evaluation queued!`);
       fetchEvaluation(); // Refresh evaluation after queuing
     } catch (error) {

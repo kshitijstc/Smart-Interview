@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -13,6 +7,43 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id                      String      @id @default(uuid())
+  name                    String
+  email                   String      @unique
+  role                    Role
+  password                String
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
+  interviewsAsCandidate   Interview[] @relation("Candidate")
+  interviewsAsInterviewer Interview[] @relation("Interviewer")
+}
+
+model Interview {
+  id            String          @id @default(uuid())
+  candidateId   String
+  interviewerId String
+  scheduledAt   DateTime
+  status        InterviewStatus @default(SCHEDULED)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  audioUrl      String?
+  codeHistory   Json[]          @default([])
+  evaluation    Json?
+  transcript    String?
+  candidate     User            @relation("Candidate", fields: [candidateId], references: [id])
+  interviewer   User            @relation("Interviewer", fields: [interviewerId], references: [id])
+  room          Room?
+}
+
+model Room {
+  id          String    @id @default(uuid())
+  interviewId String    @unique
+  roomName    String    @unique
+  link        String    @unique
+  interview   Interview @relation(fields: [interviewId], references: [id])
 }
 
 enum Role {
@@ -25,45 +56,4 @@ enum InterviewStatus {
   SCHEDULED
   COMPLETED
   NO_SHOW
-}
-
-model User {
-  id           String      @id @default(uuid())
-  name         String
-  email        String      @unique
-  role         Role
-  password     String
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-
-  // Relations
-  interviewsAsCandidate  Interview[] @relation("Candidate")
-  interviewsAsInterviewer Interview[] @relation("Interviewer")
- 
-}
-model Interview {
-  id            String      @id @default(uuid())
-  candidate     User        @relation("Candidate", fields: [candidateId], references: [id])
-  candidateId   String
-  interviewer   User        @relation("Interviewer", fields: [interviewerId], references: [id])
-  interviewerId String
-
-  audioUrl      String?     
-  transcript    String?     
-  codeHistory   Json[]     @default([])
-  room          Room?
-  scheduledAt   DateTime
-  status        InterviewStatus @default(SCHEDULED)
-  evaluation    Json?
-
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-}
-
-model Room {
-  id          String     @id @default(uuid())
-  roomName    String     @unique
-  link        String     @unique
-  interview   Interview  @relation(fields: [interviewId], references: [id])
-  interviewId String  @unique
 }
