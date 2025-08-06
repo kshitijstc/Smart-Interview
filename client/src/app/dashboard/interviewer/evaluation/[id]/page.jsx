@@ -80,7 +80,7 @@ export default function EvaluationPage() {
         <div className="bg-white rounded-xl shadow-md p-4 mb-6">
           <h2 className="text-xl font-semibold mb-4">🎛️ Controls</h2>
           <div className="space-y-4">
-            {transcript ? (
+            {/* {transcript ? (
               <div>
                 
                 <div className="bg-gray-50 border border-gray-300 rounded-lg p-3 text-sm text-gray-800 max-h-32 overflow-y-auto">
@@ -96,7 +96,7 @@ export default function EvaluationPage() {
                   ⚠️ No transcript found. Please record the candidate's explanation in the interview room first.
                 </p>
               </div>
-            )}
+            )} */}
             
             <div className="flex flex-wrap gap-4">
               <button
@@ -109,7 +109,7 @@ export default function EvaluationPage() {
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3 mt-2">
             <input
               type="number"
               placeholder="Score (0-100)"
