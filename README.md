@@ -66,19 +66,6 @@ With AI evaluation, you save time, reduce bias, and get deeper insights into you
 
 ---
 
-## Demo
-[Live Demo](https://your-demo-link.com)
-
----
-
-## Screenshots
-> _Add screenshots here_
-
-![Dashboard Screenshot](https://your-demo-link.com/screenshot1.png)
-![Interview Room Screenshot](https://your-demo-link.com/screenshot2.png)
-
----
-
 ## Installation and Setup
 
 ### Prerequisites
