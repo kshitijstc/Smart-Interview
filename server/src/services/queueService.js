@@ -44,7 +44,7 @@ const worker = new Worker(
     let evaluationData = { ...existingEvaluation };
 
     if (step === "ai") {
-      if (!code || !transcript) throw new Error("Both code and transcript are required for AI evaluation");
+      if (!code) throw new Error("Both code and transcript are required for AI evaluation");
 
       try {
         // console.log("Fetching audio...");
