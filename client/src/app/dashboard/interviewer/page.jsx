@@ -21,7 +21,7 @@ export default function InterviewerDashboard() {
       const res = await axios.get(
         `${BACKEND_URL}/api/interviews/my-interviewer`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {Authorization: `Bearer ${token}`},
         }
       );
       setInterviews(res.data);
